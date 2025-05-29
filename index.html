@@ -2,174 +2,157 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Emulation12 | Official Website</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emulation12 - Official YouTube Site</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0a0f1c, #101935);
-      color: #ffffff;
+      background: #0a0f1a;
+      color: #fff;
       overflow-x: hidden;
     }
-    header {
-      text-align: center;
-      padding: 4rem 1rem;
-      background: rgba(0, 0, 50, 0.6);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px #00f7ff;
-    }
-    header h1 {
-      font-size: 3rem;
-      color: #00f7ff;
-    }
     section {
-      padding: 3rem 1rem;
-      max-width: 1000px;
-      margin: auto;
+      padding: 80px 20px;
+      text-align: center;
     }
-    h2 {
-      color: #00f7ff;
-      border-bottom: 2px solid #00f7ff;
-      padding-bottom: 0.5rem;
+    h1, h2 {
+      color: #00aaff;
+      text-shadow: 0 0 15px #00aaff;
     }
-    .videos, .shorts {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      justify-content: center;
+    .glow-box {
+      background: rgba(0, 0, 40, 0.5);
+      border: 1px solid #00aaff;
+      box-shadow: 0 0 15px #00aaff;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
     }
-    .video {
-      flex: 1 1 300px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 10px #00f7ff55;
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
     }
     iframe {
       width: 100%;
       height: 200px;
       border: none;
-    }
-    .glow-box {
-      background: rgba(0, 255, 255, 0.05);
-      box-shadow: 0 0 20px #00f7ff;
-      border-radius: 20px;
-      padding: 2rem;
-      margin: 2rem 0;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background: #000;
-      color: #aaa;
-      font-size: 0.9rem;
+      border-radius: 10px;
     }
     a.button {
-      display: inline-block;
-      padding: 1rem 2rem;
-      margin-top: 1rem;
-      background: #00f7ff;
-      color: #000;
+      background: #00aaff;
+      color: #fff;
+      padding: 12px 25px;
       text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-      transition: background 0.3s;
+      border-radius: 30px;
+      display: inline-block;
+      margin: 15px 10px;
+      box-shadow: 0 0 15px #00aaff;
+      transition: 0.3s ease;
     }
     a.button:hover {
-      background: #00c2cc;
+      transform: scale(1.05);
+    }
+    footer {
+      background: #020813;
+      padding: 40px 20px;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Emulation12</h1>
-    <p>The Official Website</p>
-    <a class="button" href="https://www.youtube.com/@Emulation12" target="_blank">Visit My YouTube Channel</a>
-  </header>
 
   <section>
-    <h2>Live Stats</h2>
+    <h1>Welcome to Emulation12's Official Site!</h1>
+    <p class="glow-box">Explore my latest videos, channel stats, and fun content. Join the Emulation12 community today!</p>
+    <a href="https://www.youtube.com/@Emulation12" target="_blank" class="button">Visit My YouTube</a>
+  </section>
+
+  <section>
+    <h2>Live Channel Stats</h2>
     <div class="glow-box">
-      <p>Subscribers: <span id="subCount">Loading...</span></p>
-      <p>Views: <span id="viewCount">Loading...</span></p>
+      <p><strong>Subscribers:</strong> <span id="subCount">Loading...</span></p>
+      <p><strong>Total Views:</strong> <span id="viewCount">Loading...</span></p>
+      <p><strong>Total Videos:</strong> <span id="videoCount">Loading...</span></p>
     </div>
   </section>
 
   <section>
     <h2>Latest Videos</h2>
-    <div class="videos" id="videos"></div>
+    <div class="video-grid" id="latestVideos">Loading videos...</div>
   </section>
 
   <section>
     <h2>Latest Shorts</h2>
-    <div class="shorts" id="shorts"></div>
+    <div class="video-grid" id="latestShorts">Loading shorts...</div>
   </section>
 
   <section>
     <h2>About Me</h2>
     <div class="glow-box">
-      <p>I'm Emulation12, a content creator with 1.1K+ subscribers. I make fun and engaging videos for the gaming and creative community. Join the channel and become part of something amazing!</p>
-      <ul>
-        <li>📅 Joined YouTube in 2023</li>
-        <li>🎮 Plays Multiplayer Piano & more</li>
-        <li>🚀 Building a community with passion</li>
+      <p>Hey, I'm <strong>Emulation12</strong> — a content creator with over 1.1K subscribers who loves making fun, creative YouTube videos for the community! Whether it’s gaming, edits, or surprises, I’m always cooking up something new. 🔥</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fun Facts</h2>
+    <div class="glow-box">
+      <ul style="list-style: none; padding-left: 0;">
+        <li>🎮 Loves modding games</li>
+        <li>🎵 Plays Multiplayer Piano</li>
+        <li>⚡ Built this website from scratch</li>
+        <li>🌟 Hitting 2K subs soon!</li>
       </ul>
     </div>
   </section>
 
   <section>
-    <h2>More Fun</h2>
-    <div class="glow-box">
-      <p>✨ I built this website myself using GitHub Pages!</p>
-      <p>🎨 I love making mods and tools for online games.</p>
-      <p>🎬 Expect even more epic content in the future.</p>
-    </div>
+    <h2>Stay Connected</h2>
+    <a href="https://www.youtube.com/@Emulation12" target="_blank" class="button">Subscribe</a>
+    <a href="#" class="button">Discord (Coming Soon)</a>
+    <a href="#" class="button">Contact Me</a>
   </section>
 
   <footer>
-    <p>Copyright © Emulation12. All rights reserved.</p>
+    <p>&copy; 2025 Emulation12. All rights reserved.</p>
   </footer>
 
   <script>
-    const API_KEY = "AIzaSyCvWBnuAUsWu8vr2QLHScy7pkk_pCYdCFE";
-    const CHANNEL_ID = "UC1zRI8HETKZ-sREcFhsCoFA";
+    const API_KEY = 'YOUR_API_KEY_HERE';
+    const CHANNEL_ID = 'UC1zRI8HETKZ-sREcFhsCoFA';
 
-    async function fetchStats() {
+    async function getStats() {
       const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
       const data = await res.json();
       const stats = data.items[0].statistics;
-      document.getElementById("subCount").innerText = stats.subscriberCount;
-      document.getElementById("viewCount").innerText = stats.viewCount;
+      document.getElementById('subCount').textContent = stats.subscriberCount;
+      document.getElementById('viewCount').textContent = stats.viewCount;
+      document.getElementById('videoCount').textContent = stats.videoCount;
     }
 
-    async function fetchVideos() {
-      const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet&order=date&maxResults=15`);
+    async function loadVideos(containerId, isShorts = false) {
+      const res = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=20`);
       const data = await res.json();
-      let videoHTML = "";
-      let shortsHTML = "";
+      const filtered = data.items.filter(item => 
+        item.id.kind === "youtube#video" &&
+        (isShorts ? item.id.videoId.length === 11 && item.snippet.title.toLowerCase().includes("shorts") : !item.snippet.title.toLowerCase().includes("shorts"))
+      ).slice(0, 5);
 
-      let videoCount = 0;
-      let shortCount = 0;
-      for (const item of data.items) {
-        if (!item.id.videoId) continue;
-        const isShort = item.snippet.title.toLowerCase().includes("short");
-        const iframe = `<div class="video"><iframe src="https://www.youtube.com/embed/${item.id.videoId}" allowfullscreen></iframe></div>`;
-        if (isShort && shortCount < 5) {
-          shortsHTML += iframe;
-          shortCount++;
-        } else if (!isShort && videoCount < 5) {
-          videoHTML += iframe;
-          videoCount++;
-        }
-        if (videoCount >= 5 && shortCount >= 5) break;
-      }
-      document.getElementById("videos").innerHTML = videoHTML;
-      document.getElementById("shorts").innerHTML = shortsHTML;
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      filtered.forEach(item => {
+        const videoId = item.id.videoId;
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}`;
+        container.appendChild(iframe);
+      });
     }
 
-    fetchStats();
-    fetchVideos();
+    getStats();
+    loadVideos('latestVideos', false);
+    loadVideos('latestShorts', true);
   </script>
 </body>
 </html>
