@@ -1,63 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Emulation12 - YouTube Channel</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap');
+
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      background-color: #121212;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      text-align: center;
+      background-color: #0a0f25;
+      color: #cdd6f4;
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       padding: 40px 20px;
     }
-    h1 {
-      color: #ff0000;
-      font-weight: bold;
-      margin-bottom: 10px;
+
+    h1, h2 {
+      text-align: center;
+      color: #7fdbff;
+      text-shadow: 0 0 8px #00aaff, 0 0 15px #005f99;
+      margin-bottom: 20px;
     }
-    a {
-      color: #ff0000;
-      font-size: 1.2em;
-      text-decoration: none;
-      margin-bottom: 30px;
+
+    a.channel-btn {
       display: inline-block;
+      background: linear-gradient(135deg, #004f99, #00aaff);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 14px 30px;
+      border-radius: 30px;
+      box-shadow: 0 0 15px #00aaff, 0 0 40px #007acc;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      margin-bottom: 40px;
     }
-    a:hover {
-      text-decoration: underline;
+    a.channel-btn:hover {
+      box-shadow: 0 0 20px #00cfff, 0 0 50px #00cfff;
+      transform: scale(1.05);
     }
-    iframe {
-      border: none;
+
+    .videos {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1200px;
       width: 100%;
-      max-width: 560px;
-      height: 315px;
-      margin-top: 20px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ff0000cc;
+      margin-bottom: 60px;
     }
+
+    .video-wrapper {
+      flex: 1 1 320px;
+      max-width: 360px;
+      box-shadow: 0 0 20px #00aaff80;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #071425;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .video-wrapper:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 30px #00cfffcc;
+    }
+
+    iframe {
+      width: 100%;
+      height: 215px;
+      border: none;
+      display: block;
+    }
+
+    section.about {
+      background: #071425;
+      max-width: 900px;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px #00aaffcc;
+      margin-bottom: 60px;
+      color: #b0c7ff;
+    }
+
+    section.about h2 {
+      margin-bottom: 15px;
+      color: #33b3ff;
+      text-shadow: 0 0 8px #33b3ff;
+    }
+
+    section.about p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      color: #d0e6ff;
+    }
+
     footer {
-      margin-top: 50px;
-      font-size: 0.9em;
-      color: #888;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #557799;
+      padding: 20px;
+      width: 100%;
+      max-width: 900px;
+      user-select: none;
+      border-top: 1px solid #00336644;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .videos {
+        flex-direction: column;
+        align-items: center;
+      }
+      .video-wrapper {
+        max-width: 90vw;
+      }
+      section.about {
+        padding: 25px 20px;
+        margin-bottom: 40px;
+      }
     }
   </style>
 </head>
 <body>
   <h1>Welcome to Emulation12</h1>
-  <a href="https://www.youtube.com/@Emulation12" target="_blank" rel="noopener noreferrer">
-    Visit my YouTube Channel!
+
+  <a class="channel-btn" href="https://www.youtube.com/@Emulation12" target="_blank" rel="noopener noreferrer">
+    Visit My YouTube Channel
   </a>
 
-  <!-- Embed latest YouTube video by channel ID or example video -->
-  <iframe 
-    src="https://www.youtube.com/embed?listType=user_uploads&list=Emulation12" 
-    allowfullscreen
-    title="Emulation12 YouTube Videos"
-  ></iframe>
+  <div class="videos" aria-label="Recent YouTube videos">
+    <!-- Replace the video IDs below with your own recent video IDs -->
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID_1" title="Recent Video 1" allowfullscreen></iframe>
+    </div>
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID_2" title="Recent Video 2" allowfullscreen></iframe>
+    </div>
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/VIDEO_ID_3" title="Recent Video 3" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <section class="about" aria-label="About Emulation12">
+    <h2>About Me</h2>
+    <p>
+      Hey! I’m Emulation12, a passionate content creator focused on gaming, tech, and fun tutorials.  
+      I love sharing my knowledge and creativity with the world. Subscribe to my channel for the latest videos and join the journey!
+    </p>
+  </section>
 
   <footer>
-    &copy; 2025 Emulation12
+    &copy; 2025 Emulation12. All rights reserved.
   </footer>
 </body>
 </html>
