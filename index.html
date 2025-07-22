@@ -9,24 +9,45 @@
   <title>Emulation12 - Official YouTube Site</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
       "name": "Emulation12",
       "url": "https://www.youtube.com/@Emulation12",
-      "sameAs": ["https://www.youtube.com/@Emulation12"]
+      "sameAs": [
+        "https://www.youtube.com/@Emulation12",
+        "https://x.com/Emulation12",
+        "https://discord.gg/emulation12"
+      ]
     }
   </script>
   <style>
+    :root {
+      --primary-color: #00aaff;
+      --secondary-color: #0284c7;
+      --background-dark: #0a0f1a;
+      --background-light: #f3f4f6;
+      --text-dark: #ffffff;
+      --text-light: #1f2937;
+    }
+
     body {
       scroll-behavior: smooth;
-      transition: background-color 0.3s ease, color 0.3s ease;
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
       position: relative;
+      background: var(--background-dark);
+      color: var(--text-dark);
+      transition: all 0.3s ease;
     }
+
     .parallax {
       position: fixed;
       top: 0;
@@ -34,8 +55,9 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(135deg, #0a0f1a, #1e2a44);
+      background: linear-gradient(135deg, var(--background-dark), #1e2a44);
     }
+
     #particles {
       position: absolute;
       top: 0;
@@ -44,13 +66,14 @@
       height: 100%;
       z-index: -1;
     }
+
     .loading-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #0a0f1a, #1e2a44);
+      background: linear-gradient(135deg, var(--background-dark), #1e2a44);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -58,50 +81,84 @@
       z-index: 2000;
       transition: opacity 0.5s ease;
     }
+
     .loading-logo {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      border: 4px solid #00aaff;
-      margin-bottom: 20px;
+      border: 4px solid var(--primary-color);
+      animation: pulse 2s ease-in-out infinite;
+      margin-bottom: 24px;
     }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
     .loading-bar {
-      width: 200px;
-      height: 10px;
+      width: 240px;
+      height: 12px;
       background: #1f2937;
-      border-radius: 5px;
+      border-radius: 6px;
       overflow: hidden;
     }
+
     .loading-progress {
       width: 0;
       height: 100%;
-      background: #00aaff;
-      animation: load 2s ease-in-out forwards;
+      background: var(--primary-color);
+      animation: load 2.5s ease-in-out forwards;
     }
+
     @keyframes load {
       0% { width: 0; }
       100% { width: 100%; }
     }
+
     .spinner {
       border: 4px solid rgba(255, 255, 255, 0.3);
-      border-top: 4px solid #00aaff;
+      border-top: 4px solid var(--primary-color);
       border-radius: 50%;
-      width: 40px;
-      height: 40px;
+      width: 48px;
+      height: 48px;
       animation: spin 1s linear infinite;
       margin: auto;
     }
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
     .glow-effect {
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
     }
+
     .glow-effect:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 20px #00aaff;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 170, 255, 0.4);
     }
+
+    .glow-effect::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: rotate(45deg);
+      transition: all 0.6s ease;
+      pointer-events: none;
+    }
+
+    .glow-effect:hover::after {
+      left: 150%;
+    }
+
     .modal {
       display: none;
       position: fixed;
@@ -109,89 +166,145 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0, 0, 0, 0.8);
       z-index: 1000;
       align-items: center;
       justify-content: center;
+      animation: fadeIn 0.3s ease;
     }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
     .modal-content {
       background: #1f2937;
-      padding: 24px;
-      border-radius: 12px;
-      max-width: 600px;
+      padding: 32px;
+      border-radius: 16px;
+      max-width: 640px;
       width: 90%;
-      max-height: 80vh;
+      max-height: 85vh;
       overflow-y: auto;
+      box-shadow: 0 0 32px rgba(0, 170, 255, 0.3);
     }
+
     .tab-content {
       display: none;
     }
+
     .tab-content.active {
       display: block;
+      animation: slideIn 0.3s ease;
     }
+
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
     .light-theme {
-      background-color: #f3f4f6;
-      color: #1f2937;
+      background: var(--background-light) !important;
+      color: var(--text-light) !important;
     }
+
     .light-theme .parallax {
       background: linear-gradient(135deg, #e5e7eb, #d1d5db);
     }
-    .light-theme h1, .light-theme h2 {
-      color: #0284c7;
+
+    .light-theme h1, .light-theme h2, .light-theme h3 {
+      color: var(--secondary-color);
       text-shadow: none;
     }
+
     .light-theme .glow-effect {
-      border-color: #0284c7;
-      box-shadow: 0 0 15px #0284c7;
+      border-color: var(--secondary-color);
+      box-shadow: 0 0 15px var(--secondary-color);
     }
+
     .light-theme .bg-gray-800 {
-      background-color: #e5e7eb !important;
+      background: #e5e7eb !important;
     }
+
     .light-theme .bg-gray-950 {
-      background-color: #374151 !important;
+      background: #374151 !important;
     }
-    .light-theme .text-cyan-400 {
-      color: #0284c7 !important;
-    }
-    .light-theme .text-cyan-300 {
-      color: #60a5fa !important;
-    }
-    .light-theme .bg-cyan-400 {
-      background-color: #0284c7 !important;
-    }
+
     .large-font {
-      font-size: 1.25rem;
+      font-size: 1.5rem;
     }
+
     .no-animations * {
       transition: none !important;
       animation: none !important;
     }
+
     .navbar-collapse {
       display: none;
     }
+
     .navbar-collapse.active {
       display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #111827;
+      padding: 16px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
+
     .gradient-text {
-      background: linear-gradient(90deg, #00aaff, #0284c7);
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
     }
+
     .particle {
       position: absolute;
       border-radius: 50%;
       cursor: pointer;
       transition: transform 0.3s ease, background-color 0.3s ease;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
     }
+
     .particle:hover {
-      transform: scale(1.2);
+      transform: scale(1.3);
+      box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
+    }
+
+    .video-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 170, 255, 0.3);
+    }
+
+    .section-title {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @media (min-width: 768px) {
+      .navbar-collapse {
+        display: flex !important;
+        position: static;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+      }
     }
   </style>
 </head>
 <body class="bg-gray-900 text-white">
   <div class="loading-screen" id="loadingScreen">
-    <img id="loadingProfilePicture" class="loading-logo" alt="Emulation12 Loading Logo" />
-    <h2 class="text-2xl font-bold gradient-text mb-4">Emulation12</h2>
+    <img id="loadingProfilePicture" class="loading-logo" alt="Emulation12 Loading Logo" src="https://via.placeholder.com/120" />
+    <h2 class="text-3xl font-bold gradient-text mb-6 font-roboto-mono">Emulation12</h2>
     <div class="loading-bar">
       <div class="loading-progress"></div>
     </div>
@@ -199,216 +312,251 @@
   <div class="parallax">
     <canvas id="particles"></canvas>
   </div>
-  <nav class="bg-gray-950 py-4 sticky top-0 z-50">
-    <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
-      <a href="#home" class="flex items-center text-2xl font-bold gradient-text">
-        <img id="navProfilePicture" class="w-8 h-8 rounded-full mr-2 border-2 border-cyan-400" alt="Emulation12 Profile Picture" />
+  <nav class="bg-gray-950 py-4 sticky top-0 z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <a href="#home" class="flex items-center text-2xl font-bold gradient-text font-roboto-mono">
+        <img id="navProfilePicture" class="w-10 h-10 rounded-full mr-3 border-2 border-[var(--primary-color)] glow-effect" alt="Emulation12 Profile Picture" src="https://via.placeholder.com/40" />
         Emulation12
       </a>
-      <button id="navbarToggle" class="md:hidden text-cyan-400" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
-      <ul class="flex gap-6 navbar-collapse md:flex flex-col md:flex-row items-center" id="navbarMenu">
-        <li><a href="#home" class="text-cyan-400 hover:text-cyan-300 flex items-center"><i class="fas fa-home mr-1"></i>Home</a></li>
-        <li><a href="#stats" class="text-cyan-400 hover:text-cyan-300 flex items-center"><i class="fas fa-chart-line mr-1"></i>Stats</a></li>
-        <li><a href="#videos" class="text-cyan-400 hover:text-cyan-300 flex items-center"><i class="fas fa-video mr-1"></i>Videos</a></li>
-        <li><a href="#shorts" class="text-cyan-400 hover:text-cyan-300 flex items-center"><i class="fas fa-film mr-1"></i>Shorts</a></li>
-        <li><a href="#games" class="text-cyan-400 hover:text-cyan-300 flex items-center"><i class="fas fa-gamepad mr-1"></i>Games</a></li>
-        <li><a href="#community" class="text-cyan-400 hover:text-cyan-300 flex items-center"><i class="fas fa-users mr-1"></i>Community</a></li>
-        <li><a href="#comments" class="text-cyan-400 hover:text-cyan-300 flex items-center"><i class="fas fa-comments mr-1"></i>Comments</a></li>
-        <li><a href="#about" class="text-cyan-400 hover:text-cyan-300 flex items-center"><i class="fas fa-info-circle mr-1"></i>About</a></li>
-        <li><button id="settingsButton" class="text-cyan-400 hover:text-cyan-300 flex items-center" aria-label="Open settings"><i class="fas fa-cog mr-1"></i>Settings</button></li>
+      <button id="navbarToggle" class="md:hidden text-[var(--primary-color)] focus:outline-none" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+      <ul class="flex gap-8 navbar-collapse md:flex flex-col md:flex-row items-center font-semibold" id="navbarMenu">
+        <li><a href="#home" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-home mr-2"></i>Home</a></li>
+        <li><a href="#stats" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-chart-line mr-2"></i>Stats</a></li>
+        <li><a href="#videos" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-video mr-2"></i>Videos</a></li>
+        <li><a href="#shorts" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-film mr-2"></i>Shorts</a></li>
+        <li><a href="#games" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-gamepad mr-2"></i>Games</a></li>
+        <li><a href="#community" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-users mr-2"></i>Community</a></li>
+        <li><a href="#comments" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-comments mr-2"></i>Comments</a></li>
+        <li><a href="#about" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-info-circle mr-2"></i>About</a></li>
+        <li><button id="settingsButton" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors" aria-label="Open settings"><i class="fas fa-cog mr-2"></i>Settings</button></li>
       </ul>
     </div>
   </nav>
 
   <div id="settingsModal" class="modal">
     <div class="modal-content bg-gray-800 text-white">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold gradient-text"><i class="fas fa-cog mr-2"></i>Settings</h2>
-        <button id="closeModal" class="text-cyan-400 hover:text-cyan-300" aria-label="Close settings"><i class="fas fa-times"></i></button>
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold gradient-text font-roboto-mono"><i class="fas fa-cog mr-2"></i>Settings</h2>
+        <button id="closeModal" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-2xl" aria-label="Close settings"><i class="fas fa-times"></i></button>
       </div>
-      <div class="flex gap-4 mb-4">
-        <button class="tab-btn bg-cyan-400 text-gray-900 px-4 py-2 rounded-full glow-effect" data-tab="appearance">Appearance</button>
-        <button class="tab-btn bg-cyan-400 text-gray-900 px-4 py-2 rounded-full glow-effect" data-tab="accessibility">Accessibility</button>
-        <button class="tab-btn bg-cyan-400 text-gray-900 px-4 py-2 rounded-full glow-effect" data-tab="notifications">Notifications</button>
+      <div class="flex gap-4 mb-6 flex-wrap">
+        <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold" data-tab="appearance">Appearance</button>
+        <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold" data-tab="accessibility">Accessibility</button>
+        <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold" data-tab="notifications">Notifications</button>
       </div>
       <div id="appearance" class="tab-content">
-        <h3 class="text-xl font-bold gradient-text mb-2"><i class="fas fa-paint-brush mr-2"></i>Appearance</h3>
-        <label class="block mb-2">
-          <span>Theme:</span>
-          <select id="themeSelect" class="bg-gray-700 text-white p-2 rounded-lg w-full">
+        <h3 class="text-xl font-bold gradient-text mb-4 font-roboto-mono"><i class="fas fa-paint-brush mr-2"></i>Appearance</h3>
+        <label class="block mb-4">
+          <span class="font-semibold">Theme:</span>
+          <select id="themeSelect" class="bg-gray-700 text-white p-3 rounded-lg w-full mt-2 focus:ring-2 focus:ring-[var(--primary-color)]">
             <option value="dark">Dark</option>
             <option value="light">Light</option>
+            <option value="amoled">AMOLED</option>
           </select>
         </label>
-        <label class="block mb-2">
-          <span>Particle Density:</span>
-          <select id="particleDensity" class="bg-gray-700 text-white p-2 rounded-lg w-full">
+        <label class="block mb-4">
+          <span class="font-semibold">Particle Density:</span>
+          <select id="particleDensity" class="bg-gray-700 text-white p-3 rounded-lg w-full mt-2 focus:ring-2 focus:ring-[var(--primary-color)]">
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
+            <option value="ultra">Ultra</option>
           </select>
         </label>
-        <label class="block mb-2">
-          <span>Color Scheme:</span>
-          <select id="colorScheme" class="bg-gray-700 text-white p-2 rounded-lg w-full">
-            <option value="cyan">Cyan</option>
-            <option value="purple">Purple</option>
-            <option value="green">Green</option>
+        <label class="block mb-4">
+          <span class="font-semibold">Color Scheme:</span>
+          <select id="colorScheme" class="bg-gray-700 text-white p-3 rounded-lg w-full mt-2 focus:ring-2 focus:ring-[var(--primary-color)]">
+            <option value="cyan">Cyber Blue</option>
+            <option value="purple">Cosmic Purple</option>
+            <option value="green">Neon Green</option>
+            <option value="red">Crimson Red</option>
           </select>
         </label>
       </div>
       <div id="accessibility" class="tab-content">
-        <h3 class="text-xl font-bold gradient-text mb-2"><i class="fas fa-universal-access mr-2"></i>Accessibility</h3>
-        <label class="block mb-2">
-          <span>Font Size:</span>
-          <select id="fontSizeSelect" class="bg-gray-700 text-white p-2 rounded-lg w-full">
+        <h3 class="text-xl font-bold gradient-text mb-4 font-roboto-mono"><i class="fas fa-universal-access mr-2"></i>Accessibility</h3>
+        <label class="block mb-4">
+          <span class="font-semibold">Font Size:</span>
+          <select id="fontSizeSelect" class="bg-gray-700 text-white p-3 rounded-lg w-full mt-2 focus:ring-2 focus:ring-[var(--primary-color)]">
             <option value="normal">Normal</option>
             <option value="large">Large</option>
+            <option value="extra-large">Extra Large</option>
           </select>
         </label>
-        <label class="block mb-2">
-          <input type="checkbox" id="reduceAnimations" class="mr-2"> Reduce Animations
+        <label class="block mb-4 flex items-center">
+          <input type="checkbox" id="reduceAnimations" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
+          <span class="font-semibold">Reduce Animations</span>
         </label>
-        <label class="block mb-2">
-          <input type="checkbox" id="highContrast" class="mr-2"> High Contrast Mode
+        <label class="block mb-4 flex items-center">
+          <input type="checkbox" id="highContrast" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
+          <span class="font-semibold">High Contrast Mode</span>
+        </label>
+        <label class="block mb-4 flex items-center">
+          <input type="checkbox" id="screenReader" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
+          <span class="font-semibold">Screen Reader Enhancements</span>
         </label>
       </div>
       <div id="notifications" class="tab-content">
-        <h3 class="text-xl font-bold gradient-text mb-2"><i class="fas fa-bell mr-2"></i>Notifications</h3>
-        <label class="block mb-2">
-          <input type="checkbox" id="newVideoAlerts" class="mr-2"> New Video Alerts (Mock)
+        <h3 class="text-xl font-bold gradient-text mb-4 font-roboto-mono"><i class="fas fa-bell mr-2"></i>Notifications</h3>
+        <label class="block mb-4 flex items-center">
+          <input type="checkbox" id="newVideoAlerts" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
+          <span class="font-semibold">New Video Alerts (Mock)</span>
         </label>
-        <label class="block mb-2">
-          <input type="checkbox" id="communityUpdates" class="mr-2"> Community Updates (Mock)
+        <label class="block mb-4 flex items-center">
+          <input type="checkbox" id="communityUpdates" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
+          <span class="font-semibold">Community Updates (Mock)</span>
+        </label>
+        <label class="block mb-4 flex items-center">
+          <input type="checkbox" id="liveStreamAlerts" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
+          <span class="font-semibold">Live Stream Alerts (Mock)</span>
         </label>
       </div>
     </div>
   </div>
 
-  <main class="py-12 relative z-10">
-    <section id="home" class="py-12 text-center">
-      <img id="profilePicture" class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-cyan-400 glow-effect" alt="Emulation12 Profile Picture" />
-      <h1 class="text-4xl md:text-5xl font-bold gradient-text"><i class="fas fa-star mr-2"></i>Welcome to Emulation12's Official Site!</h1>
-      <div class="max-w-3xl mx-auto mt-4 bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect">
-        <p class="text-lg">Explore my latest videos, Shorts, games, community features, recent comments, and customize your experience with advanced settings!</p>
-        <a href="https://www.youtube.com/@Emulation12" target="_blank" class="inline-block mt-4 bg-cyan-400 text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect"><i class="fab fa-youtube mr-2"></i>Visit My YouTube</a>
+  <main class="py-16 relative z-10">
+    <section id="home" class="py-16 text-center">
+      <img id="profilePicture" class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-[var(--primary-color)] glow-effect" alt="Emulation12 Profile Picture" src="https://via.placeholder.com/128" />
+      <h1 class="text-5xl md:text-6xl font-bold gradient-text font-roboto-mono section-title"><i class="fas fa-star mr-3"></i>Welcome to Emulation12's Official Site!</h1>
+      <div class="max-w-4xl mx-auto mt-6 bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
+        <p class="text-xl leading-relaxed">Dive into my world of gaming, Shorts, and interactive content! Explore the latest videos, join the community, play games, and customize your experience with advanced settings.</p>
+        <div class="flex gap-4 justify-center mt-6 flex-wrap">
+          <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-youtube mr-2"></i>Visit My YouTube</a>
+          <a href="https://discord.gg/emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-discord mr-2"></i>Join Discord</a>
+        </div>
       </div>
     </section>
 
-    <section id="stats" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-chart-line mr-2"></i>Channel Stats</h2>
-      <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect grid grid-cols-1 sm:grid-cols-2 gap-4" aria-live="polite">
-        <p><i class="fas fa-users mr-2"></i><strong>Subscribers:</strong> <span id="subCount" class="text-cyan-300">Loading...</span></p>
-        <p><i class="fas fa-eye mr-2"></i><strong>Total Views:</strong> <span id="viewCount" class="text-cyan-300">Loading...</span></p>
-        <p><i class="fas fa-video mr-2"></i><strong>Total Videos:</strong> <span id="videoCount" class="text-cyan-300">Loading...</span></p>
-        <p><i class="fas fa-clock mr-2"></i><strong>Avg. View Duration:</strong> <span id="avgViewDuration" class="text-cyan-300">Loading...</span></p>
-        <p><i class="fas fa-comments mr-2"></i><strong>Total Comments:</strong> <span id="totalComments" class="text-cyan-300">Loading...</span></p>
-        <p><i class="fas fa-chart-bar mr-2"></i><strong>Subscriber Growth:</strong> <span id="subGrowth" class="text-cyan-300">Loading...</span></p>
+    <section id="stats" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-chart-line mr-3"></i>Channel Stats</h2>
+      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-live="polite">
+        <p class="text-lg"><i class="fas fa-users mr-2"></i><strong>Subscribers:</strong> <span id="subCount" class="text-[var(--primary-color)]">Loading...</span></p>
+        <p class="text-lg"><i class="fas fa-eye mr-2"></i><strong>Total Views:</strong> <span id="viewCount" class="text-[var(--primary-color)]">Loading...</span></p>
+        <p class="text-lg"><i class="fas fa-video mr-2"></i><strong>Total Videos:</strong> <span id="videoCount" class="text-[var(--primary-color)]">Loading...</span></p>
+        <p class="text-lg"><i class="fas fa-clock mr-2"></i><strong>Avg. View Duration:</strong> <span id="avgViewDuration" class="text-[var(--primary-color)]">Loading...</span></p>
+        <p class="text-lg"><i class="fas fa-comments mr-2"></i><strong>Total Comments:</strong> <span id="totalComments" class="text-[var(--primary-color)]">Loading...</span></p>
+        <p class="text-lg"><i class="fas fa-chart-bar mr-2"></i><strong>Subscriber Growth:</strong> <span id="subGrowth" class="text-[var(--primary-color)]">Loading...</span></p>
       </div>
     </section>
 
-    <section id="videos" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-video mr-2"></i>Latest Videos</h2>
-      <div id="latestVideos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+    <section id="videos" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-video mr-3"></i>Latest Videos</h2>
+      <div id="latestVideos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
         <div class="spinner"></div>
       </div>
     </section>
 
-    <section id="shorts" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-film mr-2"></i>Latest Shorts</h2>
-      <div id="latestShorts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto px-4">
+    <section id="shorts" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-film mr-3"></i>Latest Shorts</h2>
+      <div id="latestShorts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
         <div class="spinner"></div>
       </div>
     </section>
 
-    <section id="games" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-gamepad mr-2"></i>Play Games!</h2>
-      <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect">
-        <h3 class="text-xl font-bold gradient-text mb-4"><i class="fas fa-mouse-pointer mr-2"></i>Clicker Game</h3>
-        <p class="text-lg mb-4">Click the button to score points!</p>
-        <button id="clickerButton" class="bg-cyan-400 text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect"><i class="fas fa-hand-pointer mr-2"></i>Click Me!</button>
-        <p class="mt-4"><i class="fas fa-trophy mr-2"></i><strong>Score:</strong> <span id="clickerScore">0</span></p>
+    <section id="games" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-gamepad mr-3"></i>Play Games!</h2>
+      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
+        <h3 class="text-2xl font-bold gradient-text mb-6 font-roboto-mono"><i class="fas fa-mouse-pointer mr-2"></i>Clicker Game</h3>
+        <p class="text-lg mb-6">Click the button to score points and unlock achievements!</p>
+        <button id="clickerButton" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fas fa-hand-pointer mr-2"></i>Click Me!</button>
+        <p class="mt-6 text-lg"><i class="fas fa-trophy mr-2"></i><strong>Score:</strong> <span id="clickerScore">0</span></p>
+        <div id="achievements" class="mt-4 text-left max-w-md mx-auto">
+          <p class="text-sm text-gray-400">Achievements: <span id="achievementList">None unlocked</span></p>
+        </div>
       </div>
-      <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect mt-6">
-        <h3 class="text-xl font-bold gradient-text mb-4"><i class="fas fa-puzzle-piece mr-2"></i>Memory Match Game</h3>
-        <p class="text-lg mb-4">Match the pairs!</p>
-        <div id="memoryGame" class="grid grid-cols-4 gap-2 max-w-md mx-auto"></div>
-        <p class="mt-4"><i class="fas fa-trophy mr-2"></i><strong>Matches Found:</strong> <span id="memoryScore">0</span></p>
+      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect mt-8">
+        <h3 class="text-2xl font-bold gradient-text mb-6 font-roboto-mono"><i class="fas fa-puzzle-piece mr-2"></i>Memory Match Game</h3>
+        <p class="text-lg mb-6">Match the pairs to test your memory!</p>
+        <div id="memoryGame" class="grid grid-cols-4 gap-4 max-w-md mx-auto"></div>
+        <p class="mt-6 text-lg"><i class="fas fa-trophy mr-2"></i><strong>Matches Found:</strong> <span id="memoryScore">0</span></p>
       </div>
     </section>
 
-    <section id="community" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-poll mr-2"></i>Vote on Your Favorite Content</h2>
-      <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect">
-        <p class="text-lg mb-4">What type of videos do you want to see more of?</p>
-        <div class="flex flex-col items-center gap-4">
-          <button class="vote-btn bg-cyan-400 text-gray-900 px-4 py-2 rounded-full glow-effect" data-vote="Gaming"><i class="fas fa-gamepad mr-2"></i>Gaming</button>
-          <button class="vote-btn bg-cyan-400 text-gray-900 px-4 py-2 rounded-full glow-effect" data-vote="Edits"><i class="fas fa-edit mr-2"></i>Edits</button>
-          <button class="vote-btn bg-cyan-400 text-gray-900 px-4 py-2 rounded-full glow-effect" data-vote="Shorts"><i class="fas fa-film mr-2"></i>Shorts</button>
-          <button class="vote-btn bg-cyan-400 text-gray-900 px-4 py-2 rounded-full glow-effect" data-vote="Other"><i class="fas fa-ellipsis-h mr-2"></i>Other</button>
+    <section id="community" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-poll mr-3"></i>Vote on Your Favorite Content</h2>
+      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
+        <p class="text-lg mb-6">What type of content do you want to see more of?</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold hover:bg-[var(--secondary-color)] transition-colors" data-vote="Gaming"><i class="fas fa-gamepad mr-2"></i>Gaming</button>
+          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold hover:bg-[var(--secondary-color)] transition-colors" data-vote="Edits"><i class="fas fa-edit mr-2"></i>Edits</button>
+          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold hover:bg-[var(--secondary-color)] transition-colors" data-vote="Shorts"><i class="fas fa-film mr-2"></i>Shorts</button>
+          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold hover:bg-[var(--secondary-color)] transition-colors" data-vote="Other"><i class="fas fa-ellipsis-h mr-2"></i>Other</button>
         </div>
-        <p class="mt-4"><i class="fas fa-chart-pie mr-2"></i><strong>Current Votes:</strong> <span id="voteResults">No votes yet</span></p>
+        <p class="mt-6 text-lg"><i class="fas fa-chart-pie mr-2"></i><strong>Current Votes:</strong> <span id="voteResults">No votes yet</span></p>
       </div>
-      <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect mt-6">
-        <h3 class="text-xl font-bold gradient-text mb-4"><i class="fas fa-comments mr-2"></i>Community Board</h3>
-        <p class="text-lg mb-4">Leave a comment (mock, stored locally)!</p>
-        <div class="flex justify-center gap-4">
-          <input type="text" id="commentInput" placeholder="Your comment" class="px-4 py-2 rounded-lg bg-gray-700 text-white border border-cyan-400 focus:outline-none" aria-label="Comment input" />
-          <button id="submitComment" class="bg-cyan-400 text-gray-900 px-6 py-2 rounded-full font-semibold glow-effect"><i class="fas fa-paper-plane mr-2"></i>Post</button>
+      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect mt-8">
+        <h3 class="text-2xl font-bold gradient-text mb-6 font-roboto-mono"><i class="fas fa-comments mr-2"></i>Community Board</h3>
+        <p class="text-lg mb-6">Share your thoughts with the community (stored locally)!</p>
+        <div class="flex justify-center gap-4 flex-wrap">
+          <input type="text" id="commentInput" placeholder="Your comment" class="px-4 py-3 rounded-lg bg-gray-700 text-white border border-[var(--primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] w-full max-w-md" aria-label="Comment input" />
+          <button id="submitComment" class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fas fa-paper-plane mr-2"></i>Post</button>
         </div>
-        <div id="commentList" class="mt-4 text-left"></div>
+        <div id="commentList" class="mt-6 text-left space-y-4"></div>
       </div>
     </section>
 
-    <section id="comments" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-comments mr-2"></i>Recent Video Comments</h2>
-      <div id="recentComments" class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect">
+    <section id="comments" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-comments mr-3"></i>Recent Video Comments</h2>
+      <div id="recentComments" class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
         <div class="spinner"></div>
       </div>
     </section>
 
-    <section id="newsletter" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-envelope mr-2"></i>Join the Newsletter</h2>
-      <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect">
-        <p class="text-lg mb-4">Stay updated with the latest content and news!</p>
-        <div class="flex justify-center gap-4">
-          <input type="email" placeholder="Enter your email" class="px-4 py-2 rounded-lg bg-gray-700 text-white border border-cyan-400 focus:outline-none" aria-label="Email for newsletter" />
-          <button class="bg-cyan-400 text-gray-900 px-6 py-2 rounded-full font-semibold glow-effect"><i class="fas fa-sign-in-alt mr-2"></i>Sign Up</button>
+    <section id="newsletter" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-envelope mr-3"></i>Join the Newsletter</h2>
+      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
+        <p class="text-lg mb-6">Stay updated with the latest content, events, and exclusive updates!</p>
+        <div class="flex justify-center gap-4 flex-wrap">
+          <input type="email" placeholder="Enter your email" class="px-4 py-3 rounded-lg bg-gray-700 text-white border border-[var(--primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] w-full max-w-md" aria-label="Email for newsletter" />
+          <button class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fas fa-sign-in-alt mr-2"></i>Sign Up</button>
         </div>
-        <p class="text-sm mt-2 text-gray-400">*This is a mock form for demonstration.</p>
+        <p class="text-sm mt-4 text-gray-400">*This is a mock form for demonstration purposes.</p>
       </div>
     </section>
 
-    <section id="about" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-user mr-2"></i>About Me</h2>
-      <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect">
-        <p class="text-lg mb-4">Hey, I'm <strong>Emulation12</strong> — a passionate content creator with over 1.1K subscribers, dedicated to bringing fun, creative, and engaging YouTube videos to my amazing community! My journey started with a love for gaming, where I explored modding and creating unique experiences that pushed the boundaries of what games could offer. From there, I dove into video editing, crafting cinematic edits and quick, punchy Shorts that capture the thrill of gaming and beyond.</p>
-        <p class="text-lg mb-4">Beyond gaming, I'm a huge music enthusiast, often jamming on Multiplayer Piano and experimenting with sound design to add flair to my content. My goal is to not only entertain but also inspire my viewers to explore their own creativity, whether through gaming, music, or storytelling. I'm constantly learning and experimenting, whether it's coding this website from scratch or brainstorming new video ideas. With 2K subscribers on the horizon, I'm excited to keep growing, connecting with my community, and delivering content that sparks joy and excitement. Thanks for being part of this journey! 🔥</p>
+    <section id="about" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-user mr-3"></i>About Me</h2>
+      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
+        <p class="text-lg leading-relaxed mb-6">Hey, I'm <strong>Emulation12</strong> — a passionate content creator with over 1.1K subscribers, dedicated to delivering epic gaming content, cinematic edits, and punchy Shorts. My journey kicked off with a love for game modding, pushing the limits of what games can do. From there, I ventured into video editing and sound design, blending creativity with technical skill to craft experiences that resonate with my community.</p>
+        <p class="text-lg leading-relaxed mb-6">When I'm not gaming or editing, you can find me jamming on Multiplayer Piano or coding projects like this website. My mission is to inspire creativity, whether through immersive gameplay, music, or storytelling. With 2K subscribers in sight, I'm thrilled to keep growing and connecting with you all. Thanks for joining the ride! 🚀</p>
+        <div class="flex justify-center gap-4 flex-wrap">
+          <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-youtube mr-2"></i>YouTube</a>
+          <a href="https://x.com/Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-x-twitter mr-2"></i>X</a>
+          <a href="https://discord.gg/emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-discord mr-2"></i>Discord</a>
+        </div>
       </div>
     </section>
 
-    <section id="funfacts" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-star mr-2"></i>Fun Facts</h2>
-      <div class="max-w-3xl mx-auto bg-gray-800 bg-opacity-50 border border-cyan-400 rounded-lg p-6 glow-effect">
-        <ul class="list-none text-lg">
-          <li><i class="fas fa-gamepad mr-2"></i>Loves modding games</li>
-          <li><i class="fas fa-music mr-2"></i>Plays Multiplayer Piano</li>
-          <li><i class="fas fa-code mr-2"></i>Built this website from scratch</li>
-          <li><i class="fas fa-trophy mr-2"></i>Hitting 2K subs soon!</li>
+    <section id="funfacts" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-star mr-3"></i>Fun Facts</h2>
+      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
+        <ul class="list-none text-lg space-y-4">
+          <li><i class="fas fa-gamepad mr-2"></i>Master of game modding and custom levels</li>
+          <li><i class="fas fa-music mr-2"></i>Virtuoso on Multiplayer Piano</li>
+          <li><i class="fas fa-code mr-2"></i>Coded this site from the ground up</li>
+          <li><i class="fas fa-trophy mr-2"></i>Chasing 2K subscribers and beyond!</li>
+          <li><i class="fas fa-video mr-2"></i>Created over 100 unique Shorts</li>
         </ul>
       </div>
     </section>
 
-    <section id="connect" class="py-12 text-center">
-      <h2 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-link mr-2"></i>Stay Connected</h2>
-      <div class="flex justify-center gap-4 flex-wrap">
-        <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-cyan-400 text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect"><i class="fab fa-youtube mr-2"></i>YouTube</a>
+    <section id="connect" class="py-16 text-center">
+      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-link mr-3"></i>Stay Connected</h2>
+      <div class="flex justify-center gap-6 flex-wrap">
+        <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-youtube mr-2"></i>YouTube</a>
+        <a href="https://x.com/Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-x-twitter mr-2"></i>X</a>
+        <a href="https://discord.gg/emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-discord mr-2"></i>Discord</a>
       </div>
     </section>
   </main>
 
   <footer class="bg-gray-950 py-12 text-center relative z-10">
-    <p class="text-sm"><i class="fas fa-copyright mr-2"></i>© 2025 Emulation12. All rights reserved.</p>
+    <div class="max-w-4xl mx-auto px-6">
+      <p class="text-lg mb-4"><i class="fas fa-copyright mr-2"></i>© 2025 Emulation12. All rights reserved.</p>
+      <p class="text-sm text-gray-400">Built with <i class="fas fa-heart text-red-500"></i> by Emulation12</p>
+    </div>
   </footer>
 
   <script>
@@ -419,33 +567,57 @@
     window.addEventListener('load', () => {
       setTimeout(() => {
         const loadingScreen = document.getElementById('loadingScreen');
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => {
-          loadingScreen.style.display = 'none';
-        }, 500);
-      }, 2000);
+        gsap.to(loadingScreen, {
+          opacity: 0,
+          duration: 0.5,
+          ease: 'power2.out',
+          onComplete: () => {
+            loadingScreen.style.display = 'none';
+          }
+        });
+      }, 2500);
     });
 
-    // Interactive Parallax Background (Infinite Craft Style)
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.section-title').forEach(title => {
+      gsap.fromTo(title, 
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: title,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+
+    // Interactive Parallax Background
     let particles = [];
     function setup() {
       let canvas = createCanvas(windowWidth, windowHeight);
       canvas.parent('particles');
       canvas.mouseClicked(mergeParticles);
       const density = document.getElementById('particleDensity')?.value || 'medium';
-      const counts = { low: 30, medium: 60, high: 100 };
+      const counts = { low: 30, medium: 60, high: 100, ultra: 150 };
       const particleCount = counts[density];
       particles = [];
-      // Layer 1: Slow-moving, large particles (background)
-      for (let i = 0; i < particleCount * 0.4; i++) {
+      // Layer 1: Slow-moving, large particles
+      for (let i = 0; i < particleCount * 0.3; i++) {
         particles.push({
           x: random(width),
           y: random(height),
-          vx: random(-0.5, 0.5),
-          vy: random(-0.5, 0.5),
-          size: random(10, 15),
-          color: [100, 150, 255, 100], // Soft blue
-          layer: 1
+          vx: random(-0.3, 0.3),
+          vy: random(-0.3, 0.3),
+          size: random(12, 18),
+          color: [100, 150, 255, 120],
+          layer: 1,
+          shape: random(['circle', 'square', 'triangle'])
         });
       }
       // Layer 2: Medium-speed, medium particles
@@ -453,26 +625,29 @@
         particles.push({
           x: random(width),
           y: random(height),
-          vx: random(-1, 1),
-          vy: random(-1, 1),
-          size: random(5, 10),
-          color: [200, 100, 255, 150], // Purple
-          layer: 2
+          vx: random(-0.8, 0.8),
+          vy: random(-0.8, 0.8),
+          size: random(6, 12),
+          color: [200, 100, 255, 160],
+          layer: 2,
+          shape: random(['circle', 'square', 'triangle'])
         });
       }
-      // Layer 3: Fast-moving, small particles (foreground)
-      for (let i = 0; i < particleCount * 0.2; i++) {
+      // Layer 3: Fast-moving, small particles
+      for (let i = 0; i < particleCount * 0.3; i++) {
         particles.push({
           x: random(width),
           y: random(height),
-          vx: random(-2, 2),
-          vy: random(-2, 2),
-          size: random(2, 5),
-          color: [255, 255, 255, 200], // White
-          layer: 3
+          vx: random(-1.5, 1.5),
+          vy: random(-1.5, 1.5),
+          size: random(3, 6),
+          color: [255, 255, 255, 220],
+          layer: 3,
+          shape: random(['circle', 'square', 'triangle'])
         });
       }
     }
+
     function draw() {
       clear();
       particles.forEach(p => {
@@ -482,9 +657,23 @@
         if (p.y < 0 || p.y > height) p.vy *= -1;
         fill(...p.color);
         noStroke();
-        circle(p.x, p.y, p.size);
+        if (p.shape === 'circle') {
+          circle(p.x, p.y, p.size);
+        } else if (p.shape === 'square') {
+          square(p.x - p.size / 2, p.y - p.size / 2, p.size);
+        } else {
+          push();
+          translate(p.x, p.y);
+          beginShape();
+          vertex(0, -p.size);
+          vertex(p.size * 0.866, p.size / 2);
+          vertex(-p.size * 0.866, p.size / 2);
+          endShape(CLOSE);
+          pop();
+        }
       });
     }
+
     function mergeParticles() {
       let clicked = particles.filter(p => dist(mouseX, mouseY, p.x, p.y) < p.size * 2);
       if (clicked.length >= 2) {
@@ -493,21 +682,19 @@
           y: (clicked[0].y + clicked[1].y) / 2,
           vx: (clicked[0].vx + clicked[1].vx) / 2,
           vy: (clicked[0].vy + clicked[1].vy) / 2,
-          size: Math.max(clicked[0].size, clicked[1].size) * 1.5,
-          color: [255, 255, 0, 255], // Yellow glow for fusion
-          layer: Math.max(clicked[0].layer, clicked[1].layer)
+          size: Math.max(clicked[0].size, clicked[1].size) * 1.8,
+          color: [255, 255, 0, 255],
+          layer: Math.max(clicked[0].layer, clicked[1].layer),
+          shape: random(['circle', 'square', 'triangle'])
         };
         particles = particles.filter(p => !clicked.includes(p));
         particles.push(newParticle);
-        setTimeout(() => {
-          newParticle.color = [
-            random([100, 200, 255]),
-            random([100, 150, 255]),
-            random([100, 255]),
-            random(100, 200)
-          ];
-          newParticle.size = random(5, 15);
-        }, 1000);
+        gsap.to(newParticle, {
+          size: random(6, 18),
+          color: [random([100, 200, 255]), random([100, 150, 255]), random([100, 255]), random(120, 220)],
+          duration: 1,
+          ease: 'power2.out'
+        });
       }
     }
 
@@ -521,8 +708,15 @@
         }
       });
     });
+
     document.getElementById('navbarToggle').addEventListener('click', () => {
-      document.getElementById('navbarMenu').classList.toggle('active');
+      const menu = document.getElementById('navbarMenu');
+      menu.classList.toggle('active');
+      gsap.to(menu, {
+        height: menu.classList.contains('active') ? 'auto' : 0,
+        duration: 0.3,
+        ease: 'power2.out'
+      });
     });
 
     // Settings Modal
@@ -536,13 +730,23 @@
       settingsModal.style.display = 'flex';
       tabButtons[0].click();
     });
+
     closeModal.addEventListener('click', () => {
-      settingsModal.style.display = 'none';
+      gsap.to(settingsModal, {
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.out',
+        onComplete: () => {
+          settingsModal.style.display = 'none';
+          settingsModal.style.opacity = '1';
+        }
+      });
     });
+
     tabButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('bg-cyan-500'));
-        btn.classList.add('bg-cyan-500');
+        tabButtons.forEach(b => b.classList.remove('bg-[var(--secondary-color)]'));
+        btn.classList.add('bg-[var(--secondary-color)]');
         tabContents.forEach(c => c.classList.remove('active'));
         document.getElementById(btn.dataset.tab).classList.add('active');
       });
@@ -554,39 +758,62 @@
     const fontSizeSelect = document.getElementById('fontSizeSelect');
     const reduceAnimations = document.getElementById('reduceAnimations');
     const highContrast = document.getElementById('highContrast');
+    const screenReader = document.getElementById('screenReader');
     const colorScheme = document.getElementById('colorScheme');
 
     function applySettings() {
-      document.body.classList.toggle('light-theme', themeSelect.value === 'light');
-      document.body.classList.toggle('large-font', fontSizeSelect.value === 'large');
+      // Theme
+      document.body.classList.remove('light-theme', 'amoled-theme');
+      if (themeSelect.value === 'light') {
+        document.body.classList.add('light-theme');
+      } else if (themeSelect.value === 'amoled') {
+        document.body.classList.add('amoled-theme');
+        document.body.style.background = '#000000';
+        document.querySelector('.parallax').style.background = 'linear-gradient(135deg, #000000, #111111)';
+      }
+
+      // Font Size
+      document.body.classList.remove('large-font', 'extra-large-font');
+      if (fontSizeSelect.value === 'large') {
+        document.body.classList.add('large-font');
+      } else if (fontSizeSelect.value === 'extra-large') {
+        document.body.classList.add('extra-large-font');
+        document.body.style.fontSize = '1.75rem';
+      }
+
+      // Animations and Contrast
       document.body.classList.toggle('no-animations', reduceAnimations.checked);
       document.body.classList.toggle('high-contrast', highContrast.checked);
-      if (colorScheme.value === 'purple') {
-        document.body.style.setProperty('--tw-text-opacity', '1');
-        document.body.style.setProperty('--tw-bg-opacity', '1');
-        document.querySelectorAll('.bg-cyan-400').forEach(el => el.classList.replace('bg-cyan-400', 'bg-purple-400'));
-        document.querySelectorAll('.text-cyan-400').forEach(el => el.classList.replace('text-cyan-400', 'text-purple-400'));
-        document.querySelectorAll('.text-cyan-300').forEach(el => el.classList.replace('text-cyan-300', 'text-purple-300'));
-        document.querySelectorAll('.border-cyan-400').forEach(el => el.classList.replace('border-cyan-400', 'border-purple-400'));
-      } else if (colorScheme.value === 'green') {
-        document.body.style.setProperty('--tw-text-opacity', '1');
-        document.body.style.setProperty('--tw-bg-opacity', '1');
-        document.querySelectorAll('.bg-cyan-400').forEach(el => el.classList.replace('bg-cyan-400', 'bg-green-400'));
-        document.querySelectorAll('.text-cyan-400').forEach(el => el.classList.replace('text-cyan-400', 'text-green-400'));
-        document.querySelectorAll('.text-cyan-300').forEach(el => el.classList.replace('text-cyan-300', 'text-green-300'));
-        document.querySelectorAll('.border-cyan-400').forEach(el => el.classList.replace('border-cyan-400', 'border-green-400'));
-      } else {
-        document.body.style.setProperty('--tw-text-opacity', '1');
-        document.body.style.setProperty('--tw-bg-opacity', '1');
-        document.querySelectorAll('.bg-purple-400').forEach(el => el.classList.replace('bg-purple-400', 'bg-cyan-400'));
-        document.querySelectorAll('.text-purple-400').forEach(el => el.classList.replace('text-purple-400', 'text-cyan-400'));
-        document.querySelectorAll('.text-purple-300').forEach(el => el.classList.replace('text-purple-300', 'text-cyan-300'));
-        document.querySelectorAll('.border-purple-400').forEach(el => el.classList.replace('border-purple-400', 'border-cyan-400'));
-        document.querySelectorAll('.bg-green-400').forEach(el => el.classList.replace('bg-green-400', 'bg-cyan-400'));
-        document.querySelectorAll('.text-green-400').forEach(el => el.classList.replace('text-green-400', 'text-cyan-400'));
-        document.querySelectorAll('.text-green-300').forEach(el => el.classList.replace('text-green-300', 'text-cyan-300'));
-        document.querySelectorAll('.border-green-400').forEach(el => el.classList.replace('border-green-400', 'border-cyan-400'));
+      if (screenReader.checked) {
+        document.querySelectorAll('a, button, input').forEach(el => {
+          el.setAttribute('aria-label', el.getAttribute('aria-label') || el.textContent || 'Interactive element');
+        });
       }
+
+      // Color Scheme
+      const colors = {
+        cyan: { primary: '#00aaff', secondary: '#0284c7' },
+        purple: { primary: '#a855f7', secondary: '#9333ea' },
+        green: { primary: '#22c55e', secondary: '#16a34a' },
+        red: { primary: '#ef4444', secondary: '#dc2626' }
+      };
+      const selected = colors[colorScheme.value];
+      document.documentElement.style.setProperty('--primary-color', selected.primary);
+      document.documentElement.style.setProperty('--secondary-color', selected.secondary);
+      document.querySelectorAll('.bg-cyan-400').forEach(el => {
+        el.className = el.className.replace(/bg-(cyan|purple|green|red)-400/, `bg-${colorScheme.value}-400`);
+      });
+      document.querySelectorAll('.text-cyan-400').forEach(el => {
+        el.className = el.className.replace(/text-(cyan|purple|green|red)-400/, `text-${colorScheme.value}-400`);
+      });
+      document.querySelectorAll('.text-cyan-300').forEach(el => {
+        el.className = el.className.replace(/text-(cyan|purple|green|red)-300/, `text-${colorScheme.value}-300`);
+      });
+      document.querySelectorAll('.border-cyan-400').forEach(el => {
+        el.className = el.className.replace(/border-(cyan|purple|green|red)-400/, `border-${colorScheme.value}-400`);
+      });
+
+      // Particle Density
       if (particleDensity.value !== localStorage.getItem('particleDensity')) {
         localStorage.setItem('particleDensity', particleDensity.value);
         setup();
@@ -613,32 +840,68 @@
       localStorage.setItem('highContrast', highContrast.checked);
       applySettings();
     });
+    screenReader.addEventListener('change', () => {
+      localStorage.setItem('screenReader', screenReader.checked);
+      applySettings();
+    });
     colorScheme.addEventListener('change', () => {
       localStorage.setItem('colorScheme', colorScheme.value);
       applySettings();
     });
 
+    // Load saved settings
     if (localStorage.getItem('theme')) themeSelect.value = localStorage.getItem('theme');
     if (localStorage.getItem('particleDensity')) particleDensity.value = localStorage.getItem('particleDensity');
     if (localStorage.getItem('fontSize')) fontSizeSelect.value = localStorage.getItem('fontSize');
     reduceAnimations.checked = localStorage.getItem('reduceAnimations') === 'true';
     highContrast.checked = localStorage.getItem('highContrast') === 'true';
+    screenReader.checked = localStorage.getItem('screenReader') === 'true';
     colorScheme.value = localStorage.getItem('colorScheme') || 'cyan';
     applySettings();
 
-    // Clicker Game
+    // Clicker Game with Achievements
     let score = parseInt(localStorage.getItem('clickerScore')) || 0;
+    const achievements = [
+      { id: 'click10', name: 'Beginner Clicker', threshold: 10 },
+      { id: 'click100', name: 'Pro Clicker', threshold: 100 },
+      { id: 'click1000', name: 'Master Clicker', threshold: 1000 }
+    ];
+    let unlockedAchievements = JSON.parse(localStorage.getItem('achievements')) || [];
+
+    function updateAchievements() {
+      const newAchievements = achievements.filter(a => score >= a.threshold && !unlockedAchievements.includes(a.id));
+      if (newAchievements.length) {
+        newAchievements.forEach(a => {
+          unlockedAchievements.push(a.id);
+          gsap.fromTo('#achievements', 
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+          );
+        });
+        localStorage.setItem('achievements', JSON.stringify(unlockedAchievements));
+      }
+      document.getElementById('achievementList').textContent = unlockedAchievements.length 
+        ? achievements.filter(a => unlockedAchievements.includes(a.id)).map(a => a.name).join(', ')
+        : 'None unlocked';
+    }
+
     document.getElementById('clickerButton').addEventListener('click', () => {
       score++;
       document.getElementById('clickerScore').textContent = score;
       localStorage.setItem('clickerScore', score);
+      updateAchievements();
+      gsap.fromTo('#clickerScore', 
+        { scale: 1.2, opacity: 0.7 },
+        { scale: 1, opacity: 1, duration: 0.3, ease: 'bounce.out' }
+      );
     });
     document.getElementById('clickerScore').textContent = score;
+    updateAchievements();
 
     // Memory Game
     const memoryGame = document.getElementById('memoryGame');
     let memoryScore = parseInt(localStorage.getItem('memoryScore')) || 0;
-    const emojis = ['🎮', '🎮', '🎵', '🎵', '⚡', '⚡', '🌟', '🌟'];
+    const emojis = ['🎮', '🎮', '🎵', '🎵', '⚡', '⚡', '🌟', '🌟', '🔥', '🔥', '🕹️', '🕹️'];
     let flippedCards = [];
     let matchedCards = [];
 
@@ -655,7 +918,7 @@
       const shuffled = shuffle([...emojis]);
       shuffled.forEach((emoji, index) => {
         const card = document.createElement('div');
-        card.className = 'bg-gray-700 p-4 rounded-lg cursor-pointer text-2xl';
+        card.className = 'bg-gray-700 p-5 rounded-lg cursor-pointer text-3xl glow-effect';
         card.dataset.value = emoji;
         card.dataset.index = index;
         card.addEventListener('click', flipCard);
@@ -669,6 +932,10 @@
       if (flippedCards.length < 2 && !flippedCards.includes(card) && !matchedCards.includes(card.dataset.index)) {
         card.textContent = card.dataset.value;
         flippedCards.push(card);
+        gsap.fromTo(card, 
+          { rotationY: 0 },
+          { rotationY: 180, duration: 0.4, ease: 'power2.out' }
+        );
         if (flippedCards.length === 2) {
           setTimeout(checkMatch, 1000);
         }
@@ -682,14 +949,29 @@
         memoryScore++;
         document.getElementById('memoryScore').textContent = memoryScore;
         localStorage.setItem('memoryScore', memoryScore);
+        gsap.to([card1, card2], {
+          scale: 1.1,
+          opacity: 0.7,
+          duration: 0.3,
+          ease: 'power2.out',
+          yoyo: true,
+          repeat: 1
+        });
       } else {
-        card1.textContent = '';
-        card2.textContent = '';
+        gsap.to([card1, card2], {
+          rotationY: 0,
+          duration: 0.4,
+          ease: 'power2.in',
+          onComplete: () => {
+            card1.textContent = '';
+            card2.textContent = '';
+          }
+        });
       }
       flippedCards = [];
       if (matchedCards.length === emojis.length) {
         setTimeout(() => {
-          alert('You won the memory game!');
+          alert('You won the memory game! Great job!');
           matchedCards = [];
           memoryScore = 0;
           localStorage.setItem('memoryScore', memoryScore);
@@ -704,13 +986,20 @@
     const voteButtons = document.querySelectorAll('.vote-btn');
     let votes = JSON.parse(localStorage.getItem('votes')) || { Gaming: 0, Edits: 0, Shorts: 0, Other: 0 };
     function updateVoteResults() {
-      document.getElementById('voteResults').textContent = Object.entries(votes).map(([key, value]) => `${key}: ${value}`).join(', ');
+      const total = Object.values(votes).reduce((a, b) => a + b, 0);
+      document.getElementById('voteResults').innerHTML = total 
+        ? Object.entries(votes).map(([key, value]) => `${key}: ${value} (${((value/total)*100).toFixed(1)}%)`).join(', ')
+        : 'No votes yet';
     }
     voteButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         votes[btn.dataset.vote]++;
         localStorage.setItem('votes', JSON.stringify(votes));
         updateVoteResults();
+        gsap.fromTo('#voteResults', 
+          { opacity: 0, y: 10 },
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+        );
       });
     });
     updateVoteResults();
@@ -722,17 +1011,37 @@
     let comments = JSON.parse(localStorage.getItem('comments')) || [];
 
     function renderComments() {
-      commentList.innerHTML = comments.map(c => `<p class="text-lg border-b border-gray-700 py-2"><i class="fas fa-comment mr-2"></i>${c}</p>`).join('');
+      commentList.innerHTML = comments.map((c, i) => `
+        <div class="text-lg border-b border-gray-700 py-3 flex items-start">
+          <i class="fas fa-comment mr-3 mt-1 text-[var(--primary-color)]"></i>
+          <div>
+            <p class="font-semibold">User${i + 1} <span class="text-sm text-gray-400">(${new Date().toLocaleDateString()})</span></p>
+            <p>${c}</p>
+          </div>
+        </div>
+      `).join('');
+      gsap.from(commentList.children, {
+        opacity: 0,
+        y: 10,
+        stagger: 0.1,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
     }
 
     submitComment.addEventListener('click', () => {
       const comment = commentInput.value.trim();
       if (comment) {
-        comments.push(comment);
+        comments.unshift(comment);
+        if (comments.length > 10) comments.pop(); // Limit to 10 comments
         localStorage.setItem('comments', JSON.stringify(comments));
         commentInput.value = '';
         renderComments();
       }
+    });
+
+    commentInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') submitComment.click();
     });
 
     renderComments();
@@ -748,11 +1057,14 @@
         document.getElementById('profilePicture').src = profilePicture;
         document.getElementById('navProfilePicture').src = profilePicture;
         document.getElementById('loadingProfilePicture').src = profilePicture;
+        gsap.from('.loading-logo, #profilePicture, #navProfilePicture', {
+          scale: 0.8,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'elastic.out(1, 0.5)'
+        });
       } catch (error) {
         console.error('Error fetching profile picture:', error);
-        document.getElementById('profilePicture').src = 'https://via.placeholder.com/96';
-        document.getElementById('navProfilePicture').src = 'https://via.placeholder.com/32';
-        document.getElementById('loadingProfilePicture').src = 'https://via.placeholder.com/100';
       }
     }
 
@@ -766,10 +1078,20 @@
         document.getElementById('subCount').textContent = parseInt(stats.subscriberCount).toLocaleString();
         document.getElementById('viewCount').textContent = parseInt(stats.viewCount).toLocaleString();
         document.getElementById('videoCount').textContent = parseInt(stats.videoCount).toLocaleString();
-        // Mocked advanced stats (Analytics API not used)
         document.getElementById('avgViewDuration').textContent = '2m 45s';
         document.getElementById('totalComments').textContent = '1,234';
         document.getElementById('subGrowth').textContent = '+5% monthly';
+        gsap.from('#stats p', {
+          opacity: 0,
+          y: 10,
+          stagger: 0.1,
+          duration: 0.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: '#stats',
+            start: 'top 80%'
+          }
+        });
       } catch (error) {
         console.error('Error fetching stats:', error);
         document.getElementById('subCount').textContent = 'N/A';
@@ -797,7 +1119,7 @@
           return;
         }
 
-        const detailsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=contentDetails,snippet`);
+        const detailsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=contentDetails,snippet,statistics`);
         if (!detailsRes.ok) throw new Error('Failed to fetch video details');
         const detailsData = await detailsRes.json();
 
@@ -819,17 +1141,33 @@
         container.innerHTML = '';
         filtered.forEach(item => {
           const videoId = item.id;
+          const title = item.snippet.title;
+          const views = parseInt(item.statistics.viewCount).toLocaleString();
+          const published = new Date(item.snippet.publishedAt).toLocaleDateString();
           const div = document.createElement('div');
-          div.className = 'aspect-w-16 aspect-h-9';
-          const iframe = document.createElement('iframe');
-          iframe.src = `https://www.youtube.com/embed/${videoId}`;
-          iframe.title = item.snippet.title;
-          iframe.className = 'rounded-lg';
-          iframe.loading = 'lazy';
-          iframe.setAttribute('allow', 'accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-          iframe.setAttribute('allowfullscreen', '');
-          div.appendChild(iframe);
+          div.className = 'video-card bg-gray-800 bg-opacity-60 rounded-xl overflow-hidden glow-effect';
+          div.innerHTML = `
+            <div class="aspect-w-16 aspect-h-9">
+              <iframe src="https://www.youtube.com/embed/${videoId}" title="${title}" class="rounded-t-xl" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="p-4">
+              <h4 class="text-lg font-semibold line-clamp-2">${title}</h4>
+              <p class="text-sm text-gray-400"><i class="fas fa-eye mr-1"></i>${views} views • ${published}</p>
+            </div>
+          `;
           container.appendChild(div);
+        });
+
+        gsap.from(container.children, {
+          opacity: 0,
+          y: 20,
+          stagger: 0.1,
+          duration: 0.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top 80%'
+          }
         });
       } catch (error) {
         console.error('Error fetching videos:', error);
@@ -868,10 +1206,16 @@
           commentsData.items.forEach(item => {
             const comment = item.snippet.topLevelComment.snippet;
             const div = document.createElement('div');
-            div.className = 'text-left border-b border-gray-700 py-2';
+            div.className = 'text-left border-b border-gray-700 py-3';
             div.innerHTML = `
-              <p><i class="fas fa-user mr-2"></i><strong>${comment.authorDisplayName}</strong> on <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="text-cyan-400 hover:text-cyan-300">${comment.videoId}</a></p>
-              <p class="ml-6"><i class="fas fa-comment mr-2"></i>${comment.textDisplay}</p>
+              <div class="flex items-start">
+                <i class="fas fa-user mr-3 mt-1 text-[var(--primary-color)]"></i>
+                <div>
+                  <p class="font-semibold">${comment.authorDisplayName} <span class="text-sm text-gray-400">(${new Date(comment.publishedAt).toLocaleDateString()})</span></p>
+                  <p class="ml-6 line-clamp-2">${comment.textDisplay}</p>
+                  <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-sm">View video</a>
+                </div>
+              </div>
             `;
             container.appendChild(div);
           });
@@ -879,6 +1223,17 @@
         if (!container.innerHTML) {
           container.innerHTML = '<p class="text-gray-400"><i class="fas fa-exclamation-circle mr-2"></i>No comments found.</p>';
         }
+        gsap.from(container.children, {
+          opacity: 0,
+          y: 10,
+          stagger: 0.1,
+          duration: 0.5,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: container,
+            start: 'top 80%'
+          }
+        });
       } catch (error) {
         console.error('Error fetching comments:', error);
         container.innerHTML = '<p class="text-gray-400"><i class="fas fa-exclamation-circle mr-2"></i>Failed to load comments. Please try again later.</p>';
