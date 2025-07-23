@@ -1,147 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Official website of Emulation12, a YouTube content creator with over 1.1K subscribers, featuring gaming, Shorts, interactive games, community features, recent comments, and advanced settings." />
-  <meta name="keywords" content="Emulation12, YouTube, gaming, Shorts, content creator, videos, polls, games, community, comments" />
-  <meta name="author" content="Emulation12" />
-  <title>Emulation12 - Official YouTube Site</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Emulation12's ultimate YouTube hub for gaming content, Shorts, interactive games, and vibrant community engagement.">
+  <meta name="keywords" content="Emulation12, YouTube, gaming, Shorts, community, modding, interactive">
+  <meta name="author" content="Emulation12">
+  <title>Emulation12 - YouTube Hub</title>
+  <link rel="icon" type="image/png" href="https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Emulation12",
-      "url": "https://www.youtube.com/@Emulation12",
-      "sameAs": [
-        "https://www.youtube.com/@Emulation12",
-        "https://x.com/Emulation12",
-        "https://discord.gg/emulation12"
-      ]
-    }
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/engine@3.5.0/tsparticles.engine.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/basic@3.5.0/tsparticles.basic.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary-color: #00aaff;
-      --secondary-color: #0284c7;
+      --primary-color: #00d4ff;
+      --secondary-color: #7e22ce;
       --background-dark: #0a0f1a;
-      --background-light: #f3f4f6;
       --text-dark: #ffffff;
-      --text-light: #1f2937;
+      --glow-intensity: 0.6;
     }
-
     body {
-      scroll-behavior: smooth;
       font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0f1a, #1e2a44);
+      color: var(--text-dark);
+      scroll-behavior: smooth;
       overflow-x: hidden;
       position: relative;
-      background: var(--background-dark);
-      color: var(--text-dark);
-      transition: all 0.3s ease;
     }
-
-    .parallax {
+    #tsparticles {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: linear-gradient(135deg, var(--background-dark), #1e2a44);
+      pointer-events: none;
     }
-
-    #particles {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
     .loading-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, var(--background-dark), #1e2a44);
+      background: linear-gradient(135deg, #0a0f1a, #1e2a44);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       z-index: 2000;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.5s ease-out;
     }
-
     .loading-logo {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
       border: 4px solid var(--primary-color);
-      animation: pulse 2s ease-in-out infinite;
-      margin-bottom: 24px;
+      transition: transform 0.5s ease-in-out, box-shadow 0.5s;
     }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+    .loading-logo.loaded {
+      transform: scale(1.15);
+      box-shadow: 0 0 20px rgba(0, 212, 255, var(--glow-intensity));
     }
-
     .loading-bar {
-      width: 240px;
-      height: 12px;
+      width: 280px;
+      height: 14px;
       background: #1f2937;
-      border-radius: 6px;
+      border-radius: 7px;
       overflow: hidden;
     }
-
     .loading-progress {
       width: 0;
       height: 100%;
-      background: var(--primary-color);
-      animation: load 2.5s ease-in-out forwards;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      transition: width 1.5s ease-in-out;
     }
-
-    @keyframes load {
-      0% { width: 0; }
-      100% { width: 100%; }
+    .loading-progress.loaded {
+      width: 100%;
     }
-
     .spinner {
       border: 4px solid rgba(255, 255, 255, 0.3);
       border-top: 4px solid var(--primary-color);
       border-radius: 50%;
       width: 48px;
       height: 48px;
-      animation: spin 1s linear infinite;
+      animation: spin 0.8s linear infinite;
       margin: auto;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
     .glow-effect {
-      transition: all 0.4s ease;
+      transition: transform 0.3s, box-shadow 0.3s;
       position: relative;
+      border-radius: 12px;
       overflow: hidden;
     }
-
     .glow-effect:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0, 170, 255, 0.4);
+      transform: translateY(-6px);
+      box-shadow: 0 12px 24px rgba(0, 212, 255, var(--glow-intensity));
     }
-
     .glow-effect::after {
       content: '';
       position: absolute;
@@ -149,16 +109,14 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.15), transparent);
       transform: rotate(45deg);
-      transition: all 0.6s ease;
+      transition: left 0.5s;
       pointer-events: none;
     }
-
     .glow-effect:hover::after {
       left: 150%;
     }
-
     .modal {
       display: none;
       position: fixed;
@@ -166,83 +124,51 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.8);
+      background: rgba(0, 0, 0, 0.9);
       z-index: 1000;
       align-items: center;
       justify-content: center;
-      animation: fadeIn 0.3s ease;
+      transition: opacity 0.3s ease;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .modal.show {
+      display: flex;
+      opacity: 1;
     }
-
     .modal-content {
       background: #1f2937;
       padding: 32px;
       border-radius: 16px;
-      max-width: 640px;
+      max-width: 800px;
       width: 90%;
-      max-height: 85vh;
+      max-height: 90vh;
       overflow-y: auto;
-      box-shadow: 0 0 32px rgba(0, 170, 255, 0.3);
+      box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+      transition: transform 0.3s ease;
     }
-
-    .tab-content {
-      display: none;
+    .modal.show .modal-content {
+      transform: translateY(0);
     }
-
+    .tab-content { display: none; }
     .tab-content.active {
       display: block;
-      animation: slideIn 0.3s ease;
+      transition: opacity 0.3s ease;
     }
-
-    @keyframes slideIn {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
     .light-theme {
-      background: var(--background-light) !important;
-      color: var(--text-light) !important;
+      background: #f3f4f6 !important;
+      color: #1f2937 !important;
     }
-
-    .light-theme .parallax {
+    .light-theme #tsparticles {
       background: linear-gradient(135deg, #e5e7eb, #d1d5db);
     }
-
     .light-theme h1, .light-theme h2, .light-theme h3 {
       color: var(--secondary-color);
       text-shadow: none;
     }
-
-    .light-theme .glow-effect {
-      border-color: var(--secondary-color);
-      box-shadow: 0 0 15px var(--secondary-color);
-    }
-
-    .light-theme .bg-gray-800 {
-      background: #e5e7eb !important;
-    }
-
-    .light-theme .bg-gray-950 {
-      background: #374151 !important;
-    }
-
-    .large-font {
-      font-size: 1.5rem;
-    }
-
-    .no-animations * {
-      transition: none !important;
-      animation: none !important;
-    }
-
+    .large-font { font-size: 1.5rem; }
+    .no-animations * { transition: none !important; animation: none !important; }
     .navbar-collapse {
       display: none;
     }
-
     .navbar-collapse.active {
       display: flex;
       flex-direction: column;
@@ -251,45 +177,59 @@
       left: 0;
       right: 0;
       background: #111827;
-      padding: 16px;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     }
-
     .gradient-text {
       background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-fill-color: transparent;
+      color: transparent;
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
     }
-
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: transform 0.3s ease, background-color 0.3s ease;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-    }
-
-    .particle:hover {
-      transform: scale(1.3);
-      box-shadow: 0 0 16px rgba(255, 255, 255, 0.5);
-    }
-
     .video-card {
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s, box-shadow 0.3s;
+      background: rgba(31, 41, 55, 0.8);
+      backdrop-filter: blur(8px);
     }
-
     .video-card:hover {
       transform: translateY(-8px);
-      box-shadow: 0 12px 24px rgba(0, 170, 255, 0.3);
+      box-shadow: 0 12px 24px rgba(0, 212, 255, 0.5);
     }
-
     .section-title {
+      font-family: 'Orbitron', sans-serif;
       opacity: 0;
       transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
-
+    .section-title.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .cta-banner {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: #fff;
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+    }
+    input:focus, button:focus {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+    .comment-card {
+      background: rgba(31, 41, 55, 0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 16px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .comment-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 212, 255, 0.4);
+    }
     @media (min-width: 768px) {
       .navbar-collapse {
         display: flex !important;
@@ -299,75 +239,66 @@
         box-shadow: none;
       }
     }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.5s ease forwards;
+    }
   </style>
 </head>
 <body class="bg-gray-900 text-white">
-  <div class="loading-screen" id="loadingScreen">
-    <img id="loadingProfilePicture" class="loading-logo" alt="Emulation12 Loading Logo" src="https://via.placeholder.com/120" />
-    <h2 class="text-3xl font-bold gradient-text mb-6 font-roboto-mono">Emulation12</h2>
+  <div class="loading-screen" id="loadingScreen" role="alert" aria-busy="true">
+    <img id="loadingProfilePicture" class="loading-logo" alt="Emulation12 Logo" src="https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj">
+    <h2 class="text-4xl font-bold gradient-text mb-8">Emulation12</h2>
     <div class="loading-bar">
       <div class="loading-progress"></div>
     </div>
   </div>
-  <div class="parallax">
-    <canvas id="particles"></canvas>
-  </div>
-  <nav class="bg-gray-950 py-4 sticky top-0 z-50 shadow-lg">
+  <canvas id="tsparticles" role="presentation"></canvas>
+  <nav class="bg-gray-950 py-6 sticky top-0 z-50 shadow-lg" role="navigation" aria-label="Main navigation">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <a href="#home" class="flex items-center text-2xl font-bold gradient-text font-roboto-mono">
-        <img id="navProfilePicture" class="w-10 h-10 rounded-full mr-3 border-2 border-[var(--primary-color)] glow-effect" alt="Emulation12 Profile Picture" src="https://via.placeholder.com/40" />
+      <a href="#home" class="flex items-center text-3xl font-bold gradient-text">
+        <img id="navProfilePicture" class="w-12 h-12 rounded-full mr-4 border-4 border-[var(--primary-color)] glow-effect" alt="Profile picture" src="https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj">
         Emulation12
       </a>
-      <button id="navbarToggle" class="md:hidden text-[var(--primary-color)] focus:outline-none" aria-label="Toggle navigation">
-        <i class="fas fa-bars text-2xl"></i>
-      </button>
-      <ul class="flex gap-8 navbar-collapse md:flex flex-col md:flex-row items-center font-semibold" id="navbarMenu">
-        <li><a href="#home" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-home mr-2"></i>Home</a></li>
-        <li><a href="#stats" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-chart-line mr-2"></i>Stats</a></li>
-        <li><a href="#videos" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-video mr-2"></i>Videos</a></li>
-        <li><a href="#shorts" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-film mr-2"></i>Shorts</a></li>
-        <li><a href="#games" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-gamepad mr-2"></i>Games</a></li>
-        <li><a href="#community" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-users mr-2"></i>Community</a></li>
-        <li><a href="#comments" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-comments mr-2"></i>Comments</a></li>
-        <li><a href="#about" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors"><i class="fas fa-info-circle mr-2"></i>About</a></li>
-        <li><button id="settingsButton" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] flex items-center transition-colors" aria-label="Open settings"><i class="fas fa-cog mr-2"></i>Settings</button></li>
+      <button id="navbarToggle" class="md:hidden text-[var(--primary-color)]" aria-label="Toggle navigation"><i class="fas fa-bars text-2xl"></i></button>
+      <ul class="flex gap-10 navbar-collapse md:flex flex-col md:flex-row items-center font-semibold text-lg" id="navbarMenu">
+        <li><a href="#home" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-home mr-2"></i>Home</a></li>
+        <li><a href="#stats" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-chart-line mr-2"></i>Stats</a></li>
+        <li><a href="#videos" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-video mr-2"></i>Videos</a></li>
+        <li><a href="#popular-videos" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-star mr-2"></i>Popular Videos</a></li>
+        <li><a href="#games" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-gamepad mr-2"></i>Games</a></li>
+        <li><a href="#community" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-users mr-2"></i>Community</a></li>
+        <li><a href="#newsletter" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-envelope mr-2"></i>Newsletter</a></li>
+        <li><a href="#about" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-info-circle mr-2"></i>About</a></li>
+        <li><button id="settingsButton" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors" aria-label="Open settings"><i class="fas fa-cog mr-2"></i>Settings</button></li>
       </ul>
     </div>
   </nav>
-
-  <div id="settingsModal" class="modal">
+  <div id="settingsModal" class="modal" role="dialog" aria-labelledby="settingsTitle">
     <div class="modal-content bg-gray-800 text-white">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold gradient-text font-roboto-mono"><i class="fas fa-cog mr-2"></i>Settings</h2>
-        <button id="closeModal" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-2xl" aria-label="Close settings"><i class="fas fa-times"></i></button>
+        <h2 id="settingsTitle" class="text-3xl font-bold gradient-text"><i class="fas fa-cog mr-2"></i>Settings</h2>
+        <button id="closeModal" class="text-[var(--primary-color)] text-2xl" aria-label="Close settings"><i class="fas fa-times"></i></button>
       </div>
-      <div class="flex gap-4 mb-6 flex-wrap">
-        <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold" data-tab="appearance">Appearance</button>
-        <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold" data-tab="accessibility">Accessibility</button>
-        <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold" data-tab="notifications">Notifications</button>
+      <div class="flex gap-6 mb-6 flex-wrap">
+        <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-8 py-3 rounded-full glow-effect font-semibold" data-tab="appearance" aria-selected="true">Appearance</button>
+        <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-8 py-3 rounded-full glow-effect font-semibold" data-tab="accessibility" aria-selected="false">Accessibility</button>
       </div>
-      <div id="appearance" class="tab-content">
-        <h3 class="text-xl font-bold gradient-text mb-4 font-roboto-mono"><i class="fas fa-paint-brush mr-2"></i>Appearance</h3>
-        <label class="block mb-4">
-          <span class="font-semibold">Theme:</span>
-          <select id="themeSelect" class="bg-gray-700 text-white p-3 rounded-lg w-full mt-2 focus:ring-2 focus:ring-[var(--primary-color)]">
+      <div id="appearance" class="tab-content active">
+        <label class="block mb-6">
+          <span class="font-semibold text-lg">Theme:</span>
+          <select id="themeSelect" class="bg-gray-700 text-white p-4 rounded-lg w-full mt-2 border border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]" aria-label="Select theme">
             <option value="dark">Dark</option>
             <option value="light">Light</option>
-            <option value="amoled">AMOLED</option>
+            <option value="retro">Retro Neon</option>
           </select>
         </label>
-        <label class="block mb-4">
-          <span class="font-semibold">Particle Density:</span>
-          <select id="particleDensity" class="bg-gray-700 text-white p-3 rounded-lg w-full mt-2 focus:ring-2 focus:ring-[var(--primary-color)]">
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-            <option value="ultra">Ultra</option>
-          </select>
-        </label>
-        <label class="block mb-4">
-          <span class="font-semibold">Color Scheme:</span>
-          <select id="colorScheme" class="bg-gray-700 text-white p-3 rounded-lg w-full mt-2 focus:ring-2 focus:ring-[var(--primary-color)]">
+        <label class="block mb-6">
+          <span class="font-semibold text-lg">Color Scheme:</span>
+          <select id="colorScheme" class="bg-gray-700 text-white p-4 rounded-lg w-full mt-2 border border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]" aria-label="Select color scheme">
             <option value="cyan">Cyber Blue</option>
             <option value="purple">Cosmic Purple</option>
             <option value="green">Neon Green</option>
@@ -376,877 +307,585 @@
         </label>
       </div>
       <div id="accessibility" class="tab-content">
-        <h3 class="text-xl font-bold gradient-text mb-4 font-roboto-mono"><i class="fas fa-universal-access mr-2"></i>Accessibility</h3>
-        <label class="block mb-4">
-          <span class="font-semibold">Font Size:</span>
-          <select id="fontSizeSelect" class="bg-gray-700 text-white p-3 rounded-lg w-full mt-2 focus:ring-2 focus:ring-[var(--primary-color)]">
+        <label class="block mb-6">
+          <span class="font-semibold text-lg">Font Size:</span>
+          <select id="fontSizeSelect" class="bg-gray-700 text-white p-4 rounded-lg w-full mt-2 border border-[var(--primary-color)] focus:ring-2 focus:ring-[var(--primary-color)]" aria-label="Select font size">
             <option value="normal">Normal</option>
             <option value="large">Large</option>
-            <option value="extra-large">Extra Large</option>
           </select>
         </label>
-        <label class="block mb-4 flex items-center">
-          <input type="checkbox" id="reduceAnimations" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
-          <span class="font-semibold">Reduce Animations</span>
+        <label class="block mb-6 flex items-center">
+          <input type="checkbox" id="reduceAnimations" class="mr-3 w-6 h-6 accent-[var(--primary-color)]" aria-label="Reduce animations">
+          <span class="font-semibold text-lg">Reduce Animations</span>
         </label>
-        <label class="block mb-4 flex items-center">
-          <input type="checkbox" id="highContrast" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
-          <span class="font-semibold">High Contrast Mode</span>
-        </label>
-        <label class="block mb-4 flex items-center">
-          <input type="checkbox" id="screenReader" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
-          <span class="font-semibold">Screen Reader Enhancements</span>
-        </label>
-      </div>
-      <div id="notifications" class="tab-content">
-        <h3 class="text-xl font-bold gradient-text mb-4 font-roboto-mono"><i class="fas fa-bell mr-2"></i>Notifications</h3>
-        <label class="block mb-4 flex items-center">
-          <input type="checkbox" id="newVideoAlerts" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
-          <span class="font-semibold">New Video Alerts (Mock)</span>
-        </label>
-        <label class="block mb-4 flex items-center">
-          <input type="checkbox" id="communityUpdates" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
-          <span class="font-semibold">Community Updates (Mock)</span>
-        </label>
-        <label class="block mb-4 flex items-center">
-          <input type="checkbox" id="liveStreamAlerts" class="mr-3 w-5 h-5 accent-[var(--primary-color)]"> 
-          <span class="font-semibold">Live Stream Alerts (Mock)</span>
+        <label class="block mb-6 flex items-center">
+          <input type="checkbox" id="highContrast" class="mr-3 w-6 h-6 accent-[var(--primary-color)]" aria-label="High contrast mode">
+          <span class="font-semibold text-lg">High Contrast</span>
         </label>
       </div>
     </div>
   </div>
-
-  <main class="py-16 relative z-10">
-    <section id="home" class="py-16 text-center">
-      <img id="profilePicture" class="w-32 h-32 rounded-full mx-auto mb-6 border-4 border-[var(--primary-color)] glow-effect" alt="Emulation12 Profile Picture" src="https://via.placeholder.com/128" />
-      <h1 class="text-5xl md:text-6xl font-bold gradient-text font-roboto-mono section-title"><i class="fas fa-star mr-3"></i>Welcome to Emulation12's Official Site!</h1>
-      <div class="max-w-4xl mx-auto mt-6 bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
-        <p class="text-xl leading-relaxed">Dive into my world of gaming, Shorts, and interactive content! Explore the latest videos, join the community, play games, and customize your experience with advanced settings.</p>
-        <div class="flex gap-4 justify-center mt-6 flex-wrap">
-          <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-youtube mr-2"></i>Visit My YouTube</a>
-          <a href="https://discord.gg/emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-discord mr-2"></i>Join Discord</a>
+  <main class="py-20 relative z-10">
+    <section id="home" class="py-20 text-center">
+      <img id="profilePicture" class="w-40 h-40 rounded-full mx-auto mb-8 border-4 border-[var(--primary-color)] glow-effect animate-fadeIn" alt="Profile picture" src="https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj">
+      <h1 class="text-6xl font-bold gradient-text section-title" role="heading" aria-level="1"><i class="fas fa-star mr-3"></i>Join the Gaming Revolution!</h1>
+      <div class="max-w-6xl mx-auto mt-8 bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg border border-[var(--primary-color)] rounded-xl p-10 glow-effect animate-fadeIn">
+        <p class="text-xl mb-8 leading-relaxed">Welcome to Emulation12's universe, where gaming passion meets creativity and community! Explore epic videos, interactive games, and connect with fellow gamers.</p>
+        <div class="flex gap-6 justify-center flex-wrap">
+          <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-10 py-4 rounded-full glow-effect font-semibold text-lg" aria-label="Visit YouTube channel"><i class="fab fa-youtube mr-2"></i>Watch Now</a>
+          <a href="#community" class="bg-[var(--secondary-color)] text-white px-10 py-4 rounded-full glow-effect font-semibold text-lg" aria-label="Join the community">Join the Community</a>
         </div>
       </div>
-    </section>
-
-    <section id="stats" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-chart-line mr-3"></i>Channel Stats</h2>
-      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-live="polite">
-        <p class="text-lg"><i class="fas fa-users mr-2"></i><strong>Subscribers:</strong> <span id="subCount" class="text-[var(--primary-color)]">Loading...</span></p>
-        <p class="text-lg"><i class="fas fa-eye mr-2"></i><strong>Total Views:</strong> <span id="viewCount" class="text-[var(--primary-color)]">Loading...</span></p>
-        <p class="text-lg"><i class="fas fa-video mr-2"></i><strong>Total Videos:</strong> <span id="videoCount" class="text-[var(--primary-color)]">Loading...</span></p>
-        <p class="text-lg"><i class="fas fa-clock mr-2"></i><strong>Avg. View Duration:</strong> <span id="avgViewDuration" class="text-[var(--primary-color)]">Loading...</span></p>
-        <p class="text-lg"><i class="fas fa-comments mr-2"></i><strong>Total Comments:</strong> <span id="totalComments" class="text-[var(--primary-color)]">Loading...</span></p>
-        <p class="text-lg"><i class="fas fa-chart-bar mr-2"></i><strong>Subscriber Growth:</strong> <span id="subGrowth" class="text-[var(--primary-color)]">Loading...</span></p>
+      <div class="max-w-6xl mx-auto mt-10 cta-banner glow-effect animate-fadeIn">
+        <h3 class="text-3xl font-bold mb-6">Unleash Your Inner Gamer!</h3>
+        <p class="text-xl mb-8">Subscribe to Emulation12 on YouTube for exclusive content, mods, and gaming adventures!</p>
+        <a href="https://www.youtube.com/@Emulation12?sub_confirmation=1" target="_blank" class="bg-white text-[var(--primary-color)] px-10 py-4 rounded-full font-semibold text-lg glow-effect" aria-label="Subscribe to YouTube channel">Subscribe Now</a>
       </div>
     </section>
-
-    <section id="videos" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-video mr-3"></i>Latest Videos</h2>
+    <section id="stats" class="py-20 text-center">
+      <h2 class="text-5xl font-bold gradient-text mb-10 section-title" role="heading" aria-level="2"><i class="fas fa-chart-line mr-3"></i>Channel Stats</h2>
+      <div class="max-w-6xl mx-auto bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg border border-[var(--primary-color)] rounded-xl p-10 glow-effect grid grid-cols-1 sm:grid-cols-3 gap-8 animate-fadeIn">
+        <p class="text-xl"><i class="fas fa-users mr-2"></i><strong>Subscribers:</strong> <span id="subCount">Loading...</span></p>
+        <p class="text-xl"><i class="fas fa-eye mr-2"></i><strong>Views:</strong> <span id="viewCount">Loading...</span></p>
+        <p class="text-xl"><i class="fas fa-video mr-2"></i><strong>Videos:</strong> <span id="videoCount">Loading...</span></p>
+      </div>
+    </section>
+    <section id="videos" class="py-20 text-center">
+      <h2 class="text-5xl font-bold gradient-text mb-10 section-title" role="heading" aria-level="2"><i class="fas fa-video mr-3"></i>Latest Videos</h2>
       <div id="latestVideos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
-        <div class="spinner"></div>
+        <div class="spinner" aria-busy="true"></div>
       </div>
     </section>
-
-    <section id="shorts" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-film mr-3"></i>Latest Shorts</h2>
-      <div id="latestShorts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
-        <div class="spinner"></div>
+    <section id="popular-videos" class="py-20 text-center">
+      <h2 class="text-5xl font-bold gradient-text mb-10 section-title" role="heading" aria-level="2"><i class="fas fa-star mr-3"></i>Most Popular Videos</h2>
+      <div id="popularVideos" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto px-6">
+        <div class="spinner" aria-busy="true"></div>
       </div>
     </section>
-
-    <section id="games" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-gamepad mr-3"></i>Play Games!</h2>
-      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
-        <h3 class="text-2xl font-bold gradient-text mb-6 font-roboto-mono"><i class="fas fa-mouse-pointer mr-2"></i>Clicker Game</h3>
-        <p class="text-lg mb-6">Click the button to score points and unlock achievements!</p>
-        <button id="clickerButton" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fas fa-hand-pointer mr-2"></i>Click Me!</button>
-        <p class="mt-6 text-lg"><i class="fas fa-trophy mr-2"></i><strong>Score:</strong> <span id="clickerScore">0</span></p>
-        <div id="achievements" class="mt-4 text-left max-w-md mx-auto">
-          <p class="text-sm text-gray-400">Achievements: <span id="achievementList">None unlocked</span></p>
+    <section id="games" class="py-20 text-center">
+      <h2 class="text-5xl font-bold gradient-text mb-10 section-title" role="heading" aria-level="2"><i class="fas fa-gamepad mr-3"></i>Interactive Games</h2>
+      <div class="max-w-6xl mx-auto bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg border border-[var(--primary-color)] rounded-xl p-10 glow-effect animate-fadeIn">
+        <h3 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-hand-pointer mr-2"></i>Clicker Challenge</h3>
+        <p class="text-xl mb-8">Click to rack up points and unlock epic achievements!</p>
+        <button id="clickerButton" class="bg-[var(--primary-color)] text-gray-900 px-10 py-4 rounded-full glow-effect font-semibold text-lg" aria-label="Click to increase score"><i class="fas fa-hand-pointer mr-2"></i>Click Me!</button>
+        <p class="mt-8 text-xl"><i class="fas fa-trophy mr-2"></i><strong>Score:</strong> <span id="clickerScore">0</span></p>
+      </div>
+    </section>
+    <section id="community" class="py-20 text-center">
+      <h2 class="text-5xl font-bold gradient-text mb-10 section-title" role="heading" aria-level="2"><i class="fas fa-users mr-3"></i>Community Hub</h2>
+      <div class="max-w-6xl mx-auto bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg border border-[var(--primary-color)] rounded-xl p-10 glow-effect animate-fadeIn">
+        <p class="text-xl mb-8">Vote for the content you love and shape the future of Emulation12!</p>
+        <div class="flex flex-col sm:flex-row gap-6 justify-center">
+          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full glow-effect font-semibold text-lg" data-vote="Gaming" aria-label="Vote for Gaming content"><i class="fas fa-gamepad mr-2"></i>Gaming</button>
+          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full glow-effect font-semibold text-lg" data-vote="Shorts" aria-label="Vote for Shorts content"><i class="fas fa-film mr-2"></i>Shorts</button>
+          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full glow-effect font-semibold text-lg" data-vote="Edits" aria-label="Vote for Edits content"><i class="fas fa-edit mr-2"></i>Edits</button>
         </div>
+        <p class="mt-8 text-xl"><i class="fas fa-chart-pie mr-2"></i><strong>Votes:</strong> <span id="voteResults">No votes yet</span></p>
       </div>
-      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect mt-8">
-        <h3 class="text-2xl font-bold gradient-text mb-6 font-roboto-mono"><i class="fas fa-puzzle-piece mr-2"></i>Memory Match Game</h3>
-        <p class="text-lg mb-6">Match the pairs to test your memory!</p>
-        <div id="memoryGame" class="grid grid-cols-4 gap-4 max-w-md mx-auto"></div>
-        <p class="mt-6 text-lg"><i class="fas fa-trophy mr-2"></i><strong>Matches Found:</strong> <span id="memoryScore">0</span></p>
+      <div class="max-w-6xl mx-auto bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg border border-[var(--primary-color)] rounded-xl p-10 glow-effect mt-10 animate-fadeIn">
+        <h3 class="text-3xl font-bold gradient-text mb-6"><i class="fas fa-comments mr-2"></i>Recent Video Comments</h3>
+        <p class="text-xl mb-8">Join the conversation and share your thoughts with the community!</p>
+        <div id="commentList" class="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6"></div>
       </div>
     </section>
-
-    <section id="community" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-poll mr-3"></i>Vote on Your Favorite Content</h2>
-      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
-        <p class="text-lg mb-6">What type of content do you want to see more of?</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold hover:bg-[var(--secondary-color)] transition-colors" data-vote="Gaming"><i class="fas fa-gamepad mr-2"></i>Gaming</button>
-          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold hover:bg-[var(--secondary-color)] transition-colors" data-vote="Edits"><i class="fas fa-edit mr-2"></i>Edits</button>
-          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold hover:bg-[var(--secondary-color)] transition-colors" data-vote="Shorts"><i class="fas fa-film mr-2"></i>Shorts</button>
-          <button class="vote-btn bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full glow-effect font-semibold hover:bg-[var(--secondary-color)] transition-colors" data-vote="Other"><i class="fas fa-ellipsis-h mr-2"></i>Other</button>
+    <section id="newsletter" class="py-20 text-center">
+      <h2 class="text-5xl font-bold gradient-text mb-10 section-title" role="heading" aria-level="2"><i class="fas fa-envelope mr-3"></i>Newsletter Signup</h2>
+      <div class="max-w-6xl mx-auto bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg border border-[var(--primary-color)] rounded-xl p-10 glow-effect animate-fadeIn">
+        <p class="text-xl mb-8">Stay in the loop with exclusive updates, behind-the-scenes content, and more!</p>
+        <div class="flex justify-center gap-6 flex-wrap">
+          <input type="email" id="newsletterInput" placeholder="Enter your email" class="px-6 py-4 rounded-lg bg-gray-700 text-white border border-[var(--primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] w-full max-w-lg" aria-label="Enter your email for newsletter" />
+          <button id="submitNewsletter" class="bg-[var(--primary-color)] text-gray-900 px-10 py-4 rounded-full glow-effect font-semibold text-lg" aria-label="Subscribe to newsletter"><i class="fas fa-paper-plane mr-2"></i>Subscribe</button>
         </div>
-        <p class="mt-6 text-lg"><i class="fas fa-chart-pie mr-2"></i><strong>Current Votes:</strong> <span id="voteResults">No votes yet</span></p>
+        <p id="newsletterMessage" class="mt-8 text-xl"></p>
       </div>
-      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect mt-8">
-        <h3 class="text-2xl font-bold gradient-text mb-6 font-roboto-mono"><i class="fas fa-comments mr-2"></i>Community Board</h3>
-        <p class="text-lg mb-6">Share your thoughts with the community (stored locally)!</p>
-        <div class="flex justify-center gap-4 flex-wrap">
-          <input type="text" id="commentInput" placeholder="Your comment" class="px-4 py-3 rounded-lg bg-gray-700 text-white border border-[var(--primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] w-full max-w-md" aria-label="Comment input" />
-          <button id="submitComment" class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fas fa-paper-plane mr-2"></i>Post</button>
+    </section>
+    <section id="about" class="py-20 text-center">
+      <h2 class="text-5xl font-bold gradient-text mb-10 section-title" role="heading" aria-level="2"><i class="fas fa-user mr-3"></i>About Emulation12</h2>
+      <div class="max-w-6xl mx-auto bg-gray-800 bg-opacity-70 backdrop-filter backdrop-blur-lg border border-[var(--primary-color)] rounded-xl p-10 glow-effect text-left animate-fadeIn">
+        <p class="text-xl mb-6 leading-relaxed">Welcome to Emulation12, where gaming dreams become reality! I’m passionate about creating unforgettable gaming experiences through high-energy videos, creative Shorts, and innovative mods. With over 1.1K subscribers and counting, Emulation12 is a thriving community of gamers who share a love for creativity and connection.</p>
+        <p class="text-xl mb-6 leading-relaxed">My journey began with a simple goal: to push the boundaries of gaming content. From retro classics to modern masterpieces, I dive deep into game mechanics, craft custom mods, and produce Shorts that capture the thrill of gaming in seconds. Every video is a labor of love, designed to inspire and entertain.</p>
+        <p class="text-xl mb-6 leading-relaxed">What makes Emulation12 special is you—our incredible community. Through interactive games, live polls, and real-time comments, we’re building a space where every gamer’s voice matters. Join us to explore new worlds, share your passion, and be part of the next big thing in gaming!</p>
+        <div class="flex gap-6 justify-center flex-wrap">
+          <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-10 py-4 rounded-full glow-effect font-semibold text-lg" aria-label="Visit YouTube channel"><i class="fab fa-youtube mr-2"></i>Join the Adventure</a>
         </div>
-        <div id="commentList" class="mt-6 text-left space-y-4"></div>
-      </div>
-    </section>
-
-    <section id="comments" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-comments mr-3"></i>Recent Video Comments</h2>
-      <div id="recentComments" class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
-        <div class="spinner"></div>
-      </div>
-    </section>
-
-    <section id="newsletter" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-envelope mr-3"></i>Join the Newsletter</h2>
-      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
-        <p class="text-lg mb-6">Stay updated with the latest content, events, and exclusive updates!</p>
-        <div class="flex justify-center gap-4 flex-wrap">
-          <input type="email" placeholder="Enter your email" class="px-4 py-3 rounded-lg bg-gray-700 text-white border border-[var(--primary-color)] focus:outline-none focus:ring-2 focus:ring-[var(--primary-color)] w-full max-w-md" aria-label="Email for newsletter" />
-          <button class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fas fa-sign-in-alt mr-2"></i>Sign Up</button>
-        </div>
-        <p class="text-sm mt-4 text-gray-400">*This is a mock form for demonstration purposes.</p>
-      </div>
-    </section>
-
-    <section id="about" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-user mr-3"></i>About Me</h2>
-      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
-        <p class="text-lg leading-relaxed mb-6">Hey, I'm <strong>Emulation12</strong> — a passionate content creator with over 1.1K subscribers, dedicated to delivering epic gaming content, cinematic edits, and punchy Shorts. My journey kicked off with a love for game modding, pushing the limits of what games can do. From there, I ventured into video editing and sound design, blending creativity with technical skill to craft experiences that resonate with my community.</p>
-        <p class="text-lg leading-relaxed mb-6">When I'm not gaming or editing, you can find me jamming on Multiplayer Piano or coding projects like this website. My mission is to inspire creativity, whether through immersive gameplay, music, or storytelling. With 2K subscribers in sight, I'm thrilled to keep growing and connecting with you all. Thanks for joining the ride! 🚀</p>
-        <div class="flex justify-center gap-4 flex-wrap">
-          <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-youtube mr-2"></i>YouTube</a>
-          <a href="https://x.com/Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-x-twitter mr-2"></i>X</a>
-          <a href="https://discord.gg/emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-6 py-3 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-discord mr-2"></i>Discord</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="funfacts" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-star mr-3"></i>Fun Facts</h2>
-      <div class="max-w-4xl mx-auto bg-gray-800 bg-opacity-60 border border-[var(--primary-color)] rounded-xl p-8 glow-effect">
-        <ul class="list-none text-lg space-y-4">
-          <li><i class="fas fa-gamepad mr-2"></i>Master of game modding and custom levels</li>
-          <li><i class="fas fa-music mr-2"></i>Virtuoso on Multiplayer Piano</li>
-          <li><i class="fas fa-code mr-2"></i>Coded this site from the ground up</li>
-          <li><i class="fas fa-trophy mr-2"></i>Chasing 2K subscribers and beyond!</li>
-          <li><i class="fas fa-video mr-2"></i>Created over 100 unique Shorts</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="connect" class="py-16 text-center">
-      <h2 class="text-4xl font-bold gradient-text mb-8 font-roboto-mono section-title"><i class="fas fa-link mr-3"></i>Stay Connected</h2>
-      <div class="flex justify-center gap-6 flex-wrap">
-        <a href="https://www.youtube.com/@Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-youtube mr-2"></i>YouTube</a>
-        <a href="https://x.com/Emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-x-twitter mr-2"></i>X</a>
-        <a href="https://discord.gg/emulation12" target="_blank" class="bg-[var(--primary-color)] text-gray-900 px-8 py-4 rounded-full font-semibold glow-effect hover:bg-[var(--secondary-color)] transition-colors"><i class="fab fa-discord mr-2"></i>Discord</a>
       </div>
     </section>
   </main>
-
-  <footer class="bg-gray-950 py-12 text-center relative z-10">
-    <div class="max-w-4xl mx-auto px-6">
-      <p class="text-lg mb-4"><i class="fas fa-copyright mr-2"></i>© 2025 Emulation12. All rights reserved.</p>
-      <p class="text-sm text-gray-400">Built with <i class="fas fa-heart text-red-500"></i> by Emulation12</p>
+  <footer class="bg-gray-950 py-12 text-center" role="contentinfo">
+    <p class="text-xl mb-6"><i class="fas fa-copyright mr-2"></i>© 2025 Emulation12. All rights reserved.</p>
+    <div class="flex gap-8 justify-center">
+      <a href="#privacy" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-lg" aria-label="Privacy policy">Privacy</a>
+      <a href="#terms" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-lg" aria-label="Terms of service">Terms</a>
     </div>
   </footer>
-
   <script>
+    // API Configuration
     const API_KEY = 'AIzaSyCVTKY8e4Y5nJ2AmVRbOcQlRC-nN5x-_n4';
     const CHANNEL_ID = 'UC1zRI8HETKZ-sREcFhsCoFA';
+    const cacheExpiry = 12 * 3600 * 1000; // 12 hours
+
+    // Utility: Debounce function
+    function debounce(func, wait) {
+      let timeout;
+      return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+      };
+    }
+
+    // tsParticles Configuration
+    async function initParticles() {
+      try {
+        if (!window.tsParticles) {
+          console.error('tsParticles library not loaded');
+          return;
+        }
+        console.log('Attempting to load tsParticles...');
+        await tsParticles.load({
+          id: 'tsparticles',
+          options: {
+            particles: {
+              number: { value: 50 },
+              color: { value: ['#00d4ff', '#ffffff', '#7e22ce'] },
+              shape: { type: 'circle' },
+              size: { value: { min: 1, max: 4 } },
+              move: {
+                enable: true,
+                speed: 2,
+                direction: 'none',
+                outModes: { default: 'out' }
+              },
+              links: {
+                enable: true,
+                distance: 100,
+                color: '#00d4ff',
+                opacity: 0.4,
+                width: 1
+              },
+              opacity: { value: { min: 0.3, max: 0.7 } },
+              rotate: {
+                value: { min: 0, max: 360 },
+                animation: { enable: true, speed: 5, sync: false }
+              },
+              tilt: {
+                value: { min: 0, max: 360 },
+                animation: { enable: true, speed: 5, sync: false }
+              }
+            },
+            background: { color: '#0a0f1a' },
+            interactivity: {
+              events: {
+                onHover: { enable: true, mode: 'repulse' },
+                onClick: { enable: true, mode: 'push' }
+              },
+              modes: {
+                repulse: { distance: 80 },
+                push: { quantity: 2 }
+              }
+            },
+            fpsLimit: 60,
+            detectRetina: true
+          }
+        });
+        console.log('tsParticles loaded successfully');
+      } catch (error) {
+        console.error('tsParticles failed to load:', error.message);
+      }
+    }
 
     // Loading Screen
     window.addEventListener('load', () => {
+      initParticles();
+      applySettings();
       setTimeout(() => {
         const loadingScreen = document.getElementById('loadingScreen');
-        gsap.to(loadingScreen, {
-          opacity: 0,
-          duration: 0.5,
-          ease: 'power2.out',
-          onComplete: () => {
-            loadingScreen.style.display = 'none';
-          }
-        });
-      }, 2500);
+        loadingScreen.style.opacity = '0';
+        loadingScreen.querySelector('.loading-progress').classList.add('loaded');
+        loadingScreen.querySelector('.loading-logo').classList.add('loaded');
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+        }, 500);
+      }, 1500);
     });
 
-    // GSAP Animations
-    gsap.registerPlugin(ScrollTrigger);
-    document.querySelectorAll('.section-title').forEach(title => {
-      gsap.fromTo(title, 
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: title,
-            start: 'top 80%',
-            toggleActions: 'play none none reverse'
+    // Section Visibility Observer
+    const observer = new IntersectionObserver(
+      debounce((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.querySelectorAll('.section-title').forEach(title => {
+              title.classList.add('visible');
+            });
+            entry.target.querySelectorAll('.animate-fadeIn').forEach(el => {
+              el.style.animationDelay = `${Math.random() * 0.3}s`;
+              el.classList.add('animate-fadeIn');
+            });
+            observer.unobserve(entry.target);
           }
-        }
-      );
-    });
-
-    // Interactive Parallax Background
-    let particles = [];
-    function setup() {
-      let canvas = createCanvas(windowWidth, windowHeight);
-      canvas.parent('particles');
-      canvas.mouseClicked(mergeParticles);
-      const density = document.getElementById('particleDensity')?.value || 'medium';
-      const counts = { low: 30, medium: 60, high: 100, ultra: 150 };
-      const particleCount = counts[density];
-      particles = [];
-      // Layer 1: Slow-moving, large particles
-      for (let i = 0; i < particleCount * 0.3; i++) {
-        particles.push({
-          x: random(width),
-          y: random(height),
-          vx: random(-0.3, 0.3),
-          vy: random(-0.3, 0.3),
-          size: random(12, 18),
-          color: [100, 150, 255, 120],
-          layer: 1,
-          shape: random(['circle', 'square', 'triangle'])
         });
-      }
-      // Layer 2: Medium-speed, medium particles
-      for (let i = 0; i < particleCount * 0.4; i++) {
-        particles.push({
-          x: random(width),
-          y: random(height),
-          vx: random(-0.8, 0.8),
-          vy: random(-0.8, 0.8),
-          size: random(6, 12),
-          color: [200, 100, 255, 160],
-          layer: 2,
-          shape: random(['circle', 'square', 'triangle'])
-        });
-      }
-      // Layer 3: Fast-moving, small particles
-      for (let i = 0; i < particleCount * 0.3; i++) {
-        particles.push({
-          x: random(width),
-          y: random(height),
-          vx: random(-1.5, 1.5),
-          vy: random(-1.5, 1.5),
-          size: random(3, 6),
-          color: [255, 255, 255, 220],
-          layer: 3,
-          shape: random(['circle', 'square', 'triangle'])
-        });
-      }
-    }
+      }, 100),
+      { rootMargin: '0px 0px -10% 0px' }
+    );
+    document.querySelectorAll('section').forEach(section => observer.observe(section));
 
-    function draw() {
-      clear();
-      particles.forEach(p => {
-        p.x += p.vx * (p.layer / 2);
-        p.y += p.vy * (p.layer / 2);
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-        fill(...p.color);
-        noStroke();
-        if (p.shape === 'circle') {
-          circle(p.x, p.y, p.size);
-        } else if (p.shape === 'square') {
-          square(p.x - p.size / 2, p.y - p.size / 2, p.size);
-        } else {
-          push();
-          translate(p.x, p.y);
-          beginShape();
-          vertex(0, -p.size);
-          vertex(p.size * 0.866, p.size / 2);
-          vertex(-p.size * 0.866, p.size / 2);
-          endShape(CLOSE);
-          pop();
-        }
-      });
-    }
-
-    function mergeParticles() {
-      let clicked = particles.filter(p => dist(mouseX, mouseY, p.x, p.y) < p.size * 2);
-      if (clicked.length >= 2) {
-        let newParticle = {
-          x: (clicked[0].x + clicked[1].x) / 2,
-          y: (clicked[0].y + clicked[1].y) / 2,
-          vx: (clicked[0].vx + clicked[1].vx) / 2,
-          vy: (clicked[0].vy + clicked[1].vy) / 2,
-          size: Math.max(clicked[0].size, clicked[1].size) * 1.8,
-          color: [255, 255, 0, 255],
-          layer: Math.max(clicked[0].layer, clicked[1].layer),
-          shape: random(['circle', 'square', 'triangle'])
-        };
-        particles = particles.filter(p => !clicked.includes(p));
-        particles.push(newParticle);
-        gsap.to(newParticle, {
-          size: random(6, 18),
-          color: [random([100, 200, 255]), random([100, 150, 255]), random([100, 255]), random(120, 220)],
-          duration: 1,
-          ease: 'power2.out'
-        });
-      }
-    }
-
-    // Navbar Scroll and Toggle
+    // Navbar
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
+      anchor.addEventListener('click', e => {
         e.preventDefault();
         document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-        if (window.innerWidth < 768) {
-          document.getElementById('navbarMenu').classList.remove('active');
-        }
+        if (window.innerWidth < 768) document.getElementById('navbarMenu').classList.remove('active');
       });
     });
-
     document.getElementById('navbarToggle').addEventListener('click', () => {
-      const menu = document.getElementById('navbarMenu');
-      menu.classList.toggle('active');
-      gsap.to(menu, {
-        height: menu.classList.contains('active') ? 'auto' : 0,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
+      document.getElementById('navbarMenu').classList.toggle('active');
     });
 
     // Settings Modal
-    const settingsButton = document.getElementById('settingsButton');
-    const settingsModal = document.getElementById('settingsModal');
-    const closeModal = document.getElementById('closeModal');
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-
-    settingsButton.addEventListener('click', () => {
-      settingsModal.style.display = 'flex';
-      tabButtons[0].click();
+    document.getElementById('settingsButton').addEventListener('click', () => {
+      const modal = document.getElementById('settingsModal');
+      modal.classList.add('show');
+      document.querySelector('.tab-btn').click();
     });
-
-    closeModal.addEventListener('click', () => {
-      gsap.to(settingsModal, {
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power2.out',
-        onComplete: () => {
-          settingsModal.style.display = 'none';
-          settingsModal.style.opacity = '1';
-        }
-      });
+    document.getElementById('closeModal').addEventListener('click', () => {
+      document.getElementById('settingsModal').classList.remove('show');
     });
-
-    tabButtons.forEach(btn => {
+    document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        tabButtons.forEach(b => b.classList.remove('bg-[var(--secondary-color)]'));
+        document.querySelectorAll('.tab-btn').forEach(b => {
+          b.classList.remove('bg-[var(--secondary-color)]');
+          b.setAttribute('aria-selected', 'false');
+        });
         btn.classList.add('bg-[var(--secondary-color)]');
-        tabContents.forEach(c => c.classList.remove('active'));
+        btn.setAttribute('aria-selected', 'true');
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
         document.getElementById(btn.dataset.tab).classList.add('active');
       });
     });
 
-    // Settings Persistence
+    // Settings
     const themeSelect = document.getElementById('themeSelect');
-    const particleDensity = document.getElementById('particleDensity');
     const fontSizeSelect = document.getElementById('fontSizeSelect');
     const reduceAnimations = document.getElementById('reduceAnimations');
     const highContrast = document.getElementById('highContrast');
-    const screenReader = document.getElementById('screenReader');
     const colorScheme = document.getElementById('colorScheme');
-
     function applySettings() {
-      // Theme
-      document.body.classList.remove('light-theme', 'amoled-theme');
-      if (themeSelect.value === 'light') {
-        document.body.classList.add('light-theme');
-      } else if (themeSelect.value === 'amoled') {
-        document.body.classList.add('amoled-theme');
-        document.body.style.background = '#000000';
-        document.querySelector('.parallax').style.background = 'linear-gradient(135deg, #000000, #111111)';
-      }
-
-      // Font Size
-      document.body.classList.remove('large-font', 'extra-large-font');
-      if (fontSizeSelect.value === 'large') {
-        document.body.classList.add('large-font');
-      } else if (fontSizeSelect.value === 'extra-large') {
-        document.body.classList.add('extra-large-font');
-        document.body.style.fontSize = '1.75rem';
-      }
-
-      // Animations and Contrast
+      document.body.classList.remove('light-theme', 'retro-theme', 'large-font', 'high-contrast');
+      if (themeSelect.value === 'light') document.body.classList.add('light-theme');
+      else if (themeSelect.value === 'retro') document.body.style.fontFamily = "'Roboto Mono', monospace";
+      if (fontSizeSelect.value === 'large') document.body.classList.add('large-font');
       document.body.classList.toggle('no-animations', reduceAnimations.checked);
       document.body.classList.toggle('high-contrast', highContrast.checked);
-      if (screenReader.checked) {
-        document.querySelectorAll('a, button, input').forEach(el => {
-          el.setAttribute('aria-label', el.getAttribute('aria-label') || el.textContent || 'Interactive element');
-        });
-      }
-
-      // Color Scheme
       const colors = {
-        cyan: { primary: '#00aaff', secondary: '#0284c7' },
-        purple: { primary: '#a855f7', secondary: '#9333ea' },
+        cyan: { primary: '#00d4ff', secondary: '#7e22ce' },
+        purple: { primary: '#a855f7', secondary: '#6b21a8' },
         green: { primary: '#22c55e', secondary: '#16a34a' },
         red: { primary: '#ef4444', secondary: '#dc2626' }
       };
-      const selected = colors[colorScheme.value];
+      const selected = colors[colorScheme.value] || colors.cyan;
       document.documentElement.style.setProperty('--primary-color', selected.primary);
       document.documentElement.style.setProperty('--secondary-color', selected.secondary);
-      document.querySelectorAll('.bg-cyan-400').forEach(el => {
-        el.className = el.className.replace(/bg-(cyan|purple|green|red)-400/, `bg-${colorScheme.value}-400`);
-      });
-      document.querySelectorAll('.text-cyan-400').forEach(el => {
-        el.className = el.className.replace(/text-(cyan|purple|green|red)-400/, `text-${colorScheme.value}-400`);
-      });
-      document.querySelectorAll('.text-cyan-300').forEach(el => {
-        el.className = el.className.replace(/text-(cyan|purple|green|red)-300/, `text-${colorScheme.value}-300`);
-      });
-      document.querySelectorAll('.border-cyan-400').forEach(el => {
-        el.className = el.className.replace(/border-(cyan|purple|green|red)-400/, `border-${colorScheme.value}-400`);
-      });
-
-      // Particle Density
-      if (particleDensity.value !== localStorage.getItem('particleDensity')) {
-        localStorage.setItem('particleDensity', particleDensity.value);
-        setup();
-      }
     }
-
-    themeSelect.addEventListener('change', () => {
-      localStorage.setItem('theme', themeSelect.value);
-      applySettings();
-    });
-    particleDensity.addEventListener('change', () => {
-      localStorage.setItem('particleDensity', particleDensity.value);
-      applySettings();
-    });
-    fontSizeSelect.addEventListener('change', () => {
-      localStorage.setItem('fontSize', fontSizeSelect.value);
-      applySettings();
-    });
-    reduceAnimations.addEventListener('change', () => {
-      localStorage.setItem('reduceAnimations', reduceAnimations.checked);
-      applySettings();
-    });
-    highContrast.addEventListener('change', () => {
-      localStorage.setItem('highContrast', highContrast.checked);
-      applySettings();
-    });
-    screenReader.addEventListener('change', () => {
-      localStorage.setItem('screenReader', screenReader.checked);
-      applySettings();
-    });
-    colorScheme.addEventListener('change', () => {
-      localStorage.setItem('colorScheme', colorScheme.value);
-      applySettings();
-    });
-
-    // Load saved settings
-    if (localStorage.getItem('theme')) themeSelect.value = localStorage.getItem('theme');
-    if (localStorage.getItem('particleDensity')) particleDensity.value = localStorage.getItem('particleDensity');
-    if (localStorage.getItem('fontSize')) fontSizeSelect.value = localStorage.getItem('fontSize');
+    themeSelect.addEventListener('change', () => { localStorage.setItem('theme', themeSelect.value); applySettings(); });
+    fontSizeSelect.addEventListener('change', () => { localStorage.setItem('fontSize', fontSizeSelect.value); applySettings(); });
+    reduceAnimations.addEventListener('change', () => { localStorage.setItem('reduceAnimations', reduceAnimations.checked); applySettings(); });
+    highContrast.addEventListener('change', () => { localStorage.setItem('highContrast', highContrast.checked); applySettings(); });
+    colorScheme.addEventListener('change', () => { localStorage.setItem('colorScheme', colorScheme.value); applySettings(); });
+    themeSelect.value = localStorage.getItem('theme') || 'dark';
+    fontSizeSelect.value = localStorage.getItem('fontSize') || 'normal';
     reduceAnimations.checked = localStorage.getItem('reduceAnimations') === 'true';
     highContrast.checked = localStorage.getItem('highContrast') === 'true';
-    screenReader.checked = localStorage.getItem('screenReader') === 'true';
     colorScheme.value = localStorage.getItem('colorScheme') || 'cyan';
     applySettings();
 
-    // Clicker Game with Achievements
+    // Clicker Game
     let score = parseInt(localStorage.getItem('clickerScore')) || 0;
-    const achievements = [
-      { id: 'click10', name: 'Beginner Clicker', threshold: 10 },
-      { id: 'click100', name: 'Pro Clicker', threshold: 100 },
-      { id: 'click1000', name: 'Master Clicker', threshold: 1000 }
-    ];
-    let unlockedAchievements = JSON.parse(localStorage.getItem('achievements')) || [];
-
-    function updateAchievements() {
-      const newAchievements = achievements.filter(a => score >= a.threshold && !unlockedAchievements.includes(a.id));
-      if (newAchievements.length) {
-        newAchievements.forEach(a => {
-          unlockedAchievements.push(a.id);
-          gsap.fromTo('#achievements', 
-            { opacity: 0, y: 10 },
-            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
-          );
-        });
-        localStorage.setItem('achievements', JSON.stringify(unlockedAchievements));
-      }
-      document.getElementById('achievementList').textContent = unlockedAchievements.length 
-        ? achievements.filter(a => unlockedAchievements.includes(a.id)).map(a => a.name).join(', ')
-        : 'None unlocked';
-    }
-
     document.getElementById('clickerButton').addEventListener('click', () => {
       score++;
-      document.getElementById('clickerScore').textContent = score;
+      const clickerScore = document.getElementById('clickerScore');
+      clickerScore.textContent = score;
       localStorage.setItem('clickerScore', score);
-      updateAchievements();
-      gsap.fromTo('#clickerScore', 
-        { scale: 1.2, opacity: 0.7 },
-        { scale: 1, opacity: 1, duration: 0.3, ease: 'bounce.out' }
-      );
+      clickerScore.style.transform = 'scale(1.2)';
+      setTimeout(() => { clickerScore.style.transform = 'scale(1)'; }, 300);
     });
     document.getElementById('clickerScore').textContent = score;
-    updateAchievements();
-
-    // Memory Game
-    const memoryGame = document.getElementById('memoryGame');
-    let memoryScore = parseInt(localStorage.getItem('memoryScore')) || 0;
-    const emojis = ['🎮', '🎮', '🎵', '🎵', '⚡', '⚡', '🌟', '🌟', '🔥', '🔥', '🕹️', '🕹️'];
-    let flippedCards = [];
-    let matchedCards = [];
-
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-      }
-      return array;
-    }
-
-    function setupMemoryGame() {
-      memoryGame.innerHTML = '';
-      const shuffled = shuffle([...emojis]);
-      shuffled.forEach((emoji, index) => {
-        const card = document.createElement('div');
-        card.className = 'bg-gray-700 p-5 rounded-lg cursor-pointer text-3xl glow-effect';
-        card.dataset.value = emoji;
-        card.dataset.index = index;
-        card.addEventListener('click', flipCard);
-        memoryGame.appendChild(card);
-      });
-      document.getElementById('memoryScore').textContent = memoryScore;
-    }
-
-    function flipCard(e) {
-      const card = e.target;
-      if (flippedCards.length < 2 && !flippedCards.includes(card) && !matchedCards.includes(card.dataset.index)) {
-        card.textContent = card.dataset.value;
-        flippedCards.push(card);
-        gsap.fromTo(card, 
-          { rotationY: 0 },
-          { rotationY: 180, duration: 0.4, ease: 'power2.out' }
-        );
-        if (flippedCards.length === 2) {
-          setTimeout(checkMatch, 1000);
-        }
-      }
-    }
-
-    function checkMatch() {
-      const [card1, card2] = flippedCards;
-      if (card1.dataset.value === card2.dataset.value) {
-        matchedCards.push(card1.dataset.index, card2.dataset.index);
-        memoryScore++;
-        document.getElementById('memoryScore').textContent = memoryScore;
-        localStorage.setItem('memoryScore', memoryScore);
-        gsap.to([card1, card2], {
-          scale: 1.1,
-          opacity: 0.7,
-          duration: 0.3,
-          ease: 'power2.out',
-          yoyo: true,
-          repeat: 1
-        });
-      } else {
-        gsap.to([card1, card2], {
-          rotationY: 0,
-          duration: 0.4,
-          ease: 'power2.in',
-          onComplete: () => {
-            card1.textContent = '';
-            card2.textContent = '';
-          }
-        });
-      }
-      flippedCards = [];
-      if (matchedCards.length === emojis.length) {
-        setTimeout(() => {
-          alert('You won the memory game! Great job!');
-          matchedCards = [];
-          memoryScore = 0;
-          localStorage.setItem('memoryScore', memoryScore);
-          setupMemoryGame();
-        }, 500);
-      }
-    }
-
-    setupMemoryGame();
 
     // Voting System
     const voteButtons = document.querySelectorAll('.vote-btn');
-    let votes = JSON.parse(localStorage.getItem('votes')) || { Gaming: 0, Edits: 0, Shorts: 0, Other: 0 };
+    let votes = JSON.parse(localStorage.getItem('votes')) || { Gaming: 0, Shorts: 0, Edits: 0 };
     function updateVoteResults() {
       const total = Object.values(votes).reduce((a, b) => a + b, 0);
-      document.getElementById('voteResults').innerHTML = total 
-        ? Object.entries(votes).map(([key, value]) => `${key}: ${value} (${((value/total)*100).toFixed(1)}%)`).join(', ')
+      const voteResults = document.getElementById('voteResults');
+      voteResults.textContent = total 
+        ? Object.entries(votes).map(([key, value]) => `${key}: ${value}`).join(', ')
         : 'No votes yet';
+      voteResults.style.opacity = '0';
+      setTimeout(() => { voteResults.style.opacity = '1'; }, 50);
     }
     voteButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         votes[btn.dataset.vote]++;
         localStorage.setItem('votes', JSON.stringify(votes));
         updateVoteResults();
-        gsap.fromTo('#voteResults', 
-          { opacity: 0, y: 10 },
-          { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
-        );
       });
     });
     updateVoteResults();
 
-    // Community Board
-    const commentInput = document.getElementById('commentInput');
-    const submitComment = document.getElementById('submitComment');
-    const commentList = document.getElementById('commentList');
-    let comments = JSON.parse(localStorage.getItem('comments')) || [];
-
-    function renderComments() {
-      commentList.innerHTML = comments.map((c, i) => `
-        <div class="text-lg border-b border-gray-700 py-3 flex items-start">
-          <i class="fas fa-comment mr-3 mt-1 text-[var(--primary-color)]"></i>
-          <div>
-            <p class="font-semibold">User${i + 1} <span class="text-sm text-gray-400">(${new Date().toLocaleDateString()})</span></p>
-            <p>${c}</p>
-          </div>
-        </div>
-      `).join('');
-      gsap.from(commentList.children, {
-        opacity: 0,
-        y: 10,
-        stagger: 0.1,
-        duration: 0.5,
-        ease: 'power2.out'
-      });
-    }
-
-    submitComment.addEventListener('click', () => {
-      const comment = commentInput.value.trim();
-      if (comment) {
-        comments.unshift(comment);
-        if (comments.length > 10) comments.pop(); // Limit to 10 comments
-        localStorage.setItem('comments', JSON.stringify(comments));
-        commentInput.value = '';
-        renderComments();
+    // Newsletter Signup
+    const newsletterInput = document.getElementById('newsletterInput');
+    const submitNewsletter = document.getElementById('submitNewsletter');
+    const newsletterMessage = document.getElementById('newsletterMessage');
+    let subscribers = JSON.parse(localStorage.getItem('subscribers')) || [];
+    submitNewsletter.addEventListener('click', () => {
+      const email = newsletterInput.value.trim();
+      if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        subscribers.push(email);
+        localStorage.setItem('subscribers', JSON.stringify(subscribers));
+        newsletterInput.value = '';
+        newsletterMessage.textContent = 'Welcome to the crew! You’re subscribed!';
+        newsletterMessage.className = 'text-xl mt-8 text-green-400';
+        newsletterMessage.style.opacity = '0';
+        setTimeout(() => { newsletterMessage.style.opacity = '1'; }, 50);
+      } else {
+        newsletterMessage.textContent = 'Please enter a valid email address.';
+        newsletterMessage.className = 'text-xl mt-8 text-red-400';
+        newsletterMessage.style.opacity = '0';
+        setTimeout(() => { newsletterMessage.style.opacity = '1'; }, 50);
       }
     });
-
-    commentInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') submitComment.click();
+    newsletterInput.addEventListener('keypress', e => {
+      if (e.key === 'Enter') submitNewsletter.click();
     });
 
-    renderComments();
-
-    // YouTube API Functions
-    async function getProfilePicture() {
-      try {
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${CHANNEL_ID}&key=${API_KEY}`);
-        if (!res.ok) throw new Error('Failed to fetch profile picture');
-        const data = await res.json();
-        if (!data.items?.[0]?.snippet?.thumbnails) throw new Error('No profile picture available');
-        const profilePicture = data.items[0].snippet.thumbnails.high.url;
+    // YouTube API
+    function loadYouTubeData() {
+      async function getProfilePicture() {
+        const profilePicture = 'https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj';
         document.getElementById('profilePicture').src = profilePicture;
         document.getElementById('navProfilePicture').src = profilePicture;
         document.getElementById('loadingProfilePicture').src = profilePicture;
-        gsap.from('.loading-logo, #profilePicture, #navProfilePicture', {
-          scale: 0.8,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'elastic.out(1, 0.5)'
+        const images = [document.getElementById('profilePicture'), document.getElementById('navProfilePicture'), document.getElementById('loadingProfilePicture')];
+        images.forEach(img => {
+          img.style.transform = 'scale(0.8)';
+          img.style.opacity = '0';
+          setTimeout(() => {
+            img.style.transform = 'scale(1)';
+            img.style.opacity = '1';
+          }, 50);
         });
-      } catch (error) {
-        console.error('Error fetching profile picture:', error);
       }
-    }
-
-    async function getStats() {
-      try {
-        const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
-        if (!res.ok) throw new Error('Failed to fetch stats');
-        const data = await res.json();
-        if (!data.items?.[0]?.statistics) throw new Error('No stats available');
-        const stats = data.items[0].statistics;
-        document.getElementById('subCount').textContent = parseInt(stats.subscriberCount).toLocaleString();
-        document.getElementById('viewCount').textContent = parseInt(stats.viewCount).toLocaleString();
-        document.getElementById('videoCount').textContent = parseInt(stats.videoCount).toLocaleString();
-        document.getElementById('avgViewDuration').textContent = '2m 45s';
-        document.getElementById('totalComments').textContent = '1,234';
-        document.getElementById('subGrowth').textContent = '+5% monthly';
-        gsap.from('#stats p', {
-          opacity: 0,
-          y: 10,
-          stagger: 0.1,
-          duration: 0.5,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: '#stats',
-            start: 'top 80%'
+      async function getStats() {
+        const cacheKey = 'channelStats';
+        const cached = JSON.parse(localStorage.getItem(cacheKey));
+        if (cached && Date.now() - cached.timestamp < 24 * 3600 * 1000) {
+          document.getElementById('subCount').textContent = cached.subscriberCount;
+          document.getElementById('viewCount').textContent = cached.viewCount;
+          document.getElementById('videoCount').textContent = cached.videoCount;
+          return cached;
+        }
+        try {
+          const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${CHANNEL_ID}&key=${API_KEY}`);
+          const data = await res.json();
+          if (!data.items) throw new Error('No stats data found');
+          const stats = data.items[0].statistics;
+          document.getElementById('subCount').textContent = parseInt(stats.subscriberCount).toLocaleString();
+          document.getElementById('viewCount').textContent = parseInt(stats.viewCount).toLocaleString();
+          document.getElementById('videoCount').textContent = parseInt(stats.videoCount).toLocaleString();
+          localStorage.setItem(cacheKey, JSON.stringify({
+            timestamp: Date.now(),
+            subscriberCount: parseInt(stats.subscriberCount).toLocaleString(),
+            viewCount: parseInt(stats.viewCount).toLocaleString(),
+            videoCount: parseInt(stats.videoCount).toLocaleString()
+          }));
+          [document.getElementById('subCount'), document.getElementById('viewCount'), document.getElementById('videoCount')].forEach(el => {
+            el.style.opacity = '0';
+            setTimeout(() => { el.style.opacity = '1'; }, 50);
+          });
+          return stats;
+        } catch (error) {
+          console.error('Error in getStats:', error.message, error.response?.status);
+          document.getElementById('subCount').textContent = '1,100';
+          document.getElementById('viewCount').textContent = '100,000';
+          document.getElementById('videoCount').textContent = '50';
+          return { subscriberCount: 1100, viewCount: 100000, videoCount: 50 };
+        }
+      }
+      async function loadLatestVideos() {
+        const container = document.getElementById('latestVideos');
+        try {
+          const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=6`);
+          const searchData = await searchRes.json();
+          if (!searchData.items) throw new Error('No videos found');
+          const videoIds = searchData.items.filter(item => item.id.kind === 'youtube#video').map(item => item.id.videoId).join(',');
+          if (!videoIds) {
+            container.innerHTML = '<p class="text-red-400 text-xl">No videos found.</p>';
+            return;
           }
-        });
-      } catch (error) {
-        console.error('Error fetching stats:', error);
-        document.getElementById('subCount').textContent = 'N/A';
-        document.getElementById('viewCount').textContent = 'N/A';
-        document.getElementById('videoCount').textContent = 'N/A';
-        document.getElementById('avgViewDuration').textContent = 'N/A';
-        document.getElementById('totalComments').textContent = 'N/A';
-        document.getElementById('subGrowth').textContent = 'N/A';
-      }
-    }
-
-    async function loadVideos(containerId, isShorts = false) {
-      const container = document.getElementById(containerId);
-      try {
-        const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=20`);
-        if (!searchRes.ok) throw new Error('Failed to fetch videos');
-        const searchData = await searchRes.json();
-        const videoIds = searchData.items
-          .filter(item => item.id.kind === 'youtube#video')
-          .map(item => item.id.videoId)
-          .join(',');
-
-        if (!videoIds) {
-          container.innerHTML = '<p class="text-gray-400"><i class="fas fa-exclamation-circle mr-2"></i>No videos found.</p>';
-          return;
-        }
-
-        const detailsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=contentDetails,snippet,statistics`);
-        if (!detailsRes.ok) throw new Error('Failed to fetch video details');
-        const detailsData = await detailsRes.json();
-
-        const filtered = detailsData.items
-          .filter(item => {
-            const duration = item.contentDetails.duration;
-            const isShortDuration = parseDuration(duration) <= 60;
-            const thumbnail = item.snippet.thumbnails.high;
-            const isVertical = thumbnail.height > thumbnail.width;
-            return isShorts ? (isShortDuration || isVertical) : !(isShortDuration || isVertical);
-          })
-          .slice(0, 6);
-
-        if (filtered.length === 0) {
-          container.innerHTML = '<p class="text-gray-400"><i class="fas fa-exclamation-circle mr-2"></i>No videos found.</p>';
-          return;
-        }
-
-        container.innerHTML = '';
-        filtered.forEach(item => {
-          const videoId = item.id;
-          const title = item.snippet.title;
-          const views = parseInt(item.statistics.viewCount).toLocaleString();
-          const published = new Date(item.snippet.publishedAt).toLocaleDateString();
-          const div = document.createElement('div');
-          div.className = 'video-card bg-gray-800 bg-opacity-60 rounded-xl overflow-hidden glow-effect';
-          div.innerHTML = `
-            <div class="aspect-w-16 aspect-h-9">
-              <iframe src="https://www.youtube.com/embed/${videoId}" title="${title}" class="rounded-t-xl" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-            <div class="p-4">
-              <h4 class="text-lg font-semibold line-clamp-2">${title}</h4>
-              <p class="text-sm text-gray-400"><i class="fas fa-eye mr-1"></i>${views} views • ${published}</p>
-            </div>
-          `;
-          container.appendChild(div);
-        });
-
-        gsap.from(container.children, {
-          opacity: 0,
-          y: 20,
-          stagger: 0.1,
-          duration: 0.5,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: container,
-            start: 'top 80%'
-          }
-        });
-      } catch (error) {
-        console.error('Error fetching videos:', error);
-        container.innerHTML = '<p class="text-gray-400"><i class="fas fa-exclamation-circle mr-2"></i>Failed to load videos. Please try again later.</p>';
-      }
-    }
-
-    function parseDuration(duration) {
-      const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-      const hours = parseInt(match[1]) || 0;
-      const minutes = parseInt(match[2]) || 0;
-      const seconds = parseInt(match[3]) || 0;
-      return hours * 3600 + minutes * 60 + seconds;
-    }
-
-    async function loadRecentComments() {
-      const container = document.getElementById('recentComments');
-      try {
-        const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=5&type=video`);
-        if (!searchRes.ok) throw new Error('Failed to fetch videos');
-        const searchData = await searchRes.json();
-        const videoIds = searchData.items
-          .filter(item => item.id.kind === 'youtube#video')
-          .map(item => item.id.videoId);
-
-        if (!videoIds.length) {
-          container.innerHTML = '<p class="text-gray-400"><i class="fas fa-exclamation-circle mr-2"></i>No comments found.</p>';
-          return;
-        }
-
-        container.innerHTML = '';
-        for (const videoId of videoIds) {
-          const commentsRes = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?key=${API_KEY}&videoId=${videoId}&part=snippet&maxResults=2`);
-          if (!commentsRes.ok) continue;
-          const commentsData = await commentsRes.json();
-          commentsData.items.forEach(item => {
-            const comment = item.snippet.topLevelComment.snippet;
+          const detailsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=snippet,statistics`);
+          const detailsData = await detailsRes.json();
+          if (!detailsData.items) throw new Error('No video details found');
+          container.innerHTML = '';
+          detailsData.items.forEach((item, i) => {
             const div = document.createElement('div');
-            div.className = 'text-left border-b border-gray-700 py-3';
+            div.className = 'video-card bg-gray-800 rounded-xl glow-effect';
+            div.style.opacity = '0';
             div.innerHTML = `
-              <div class="flex items-start">
-                <i class="fas fa-user mr-3 mt-1 text-[var(--primary-color)]"></i>
-                <div>
-                  <p class="font-semibold">${comment.authorDisplayName} <span class="text-sm text-gray-400">(${new Date(comment.publishedAt).toLocaleDateString()})</span></p>
-                  <p class="ml-6 line-clamp-2">${comment.textDisplay}</p>
-                  <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-sm">View video</a>
+              <div class="aspect-w-16 aspect-h-9">
+                <iframe data-src="https://www.youtube.com/embed/${item.id}" title="${item.snippet.title}" class="rounded-t-xl lazy-iframe" loading="lazy" allowfullscreen></iframe>
+              </div>
+              <div class="p-6">
+                <h4 class="text-xl font-semibold line-clamp-2 mb-3">${item.snippet.title}</h4>
+                <p class="text-base text-gray-400"><i class="fas fa-eye mr-2"></i>${parseInt(item.statistics.viewCount).toLocaleString()} views • ${new Date(item.snippet.publishedAt).toLocaleDateString()}</p>
+              </div>
+            `;
+            container.appendChild(div);
+            setTimeout(() => { div.style.opacity = '1'; }, i * 100);
+          });
+          const observer = new IntersectionObserver(
+            debounce((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  const iframe = entry.target;
+                  iframe.src = iframe.dataset.src;
+                  observer.unobserve(iframe);
+                }
+              });
+            }, 100),
+            { rootMargin: '200px' }
+          );
+          document.querySelectorAll('.lazy-iframe').forEach(iframe => observer.observe(iframe));
+        } catch (error) {
+          console.error('Error in loadLatestVideos:', error.message, error.response?.status);
+          container.innerHTML = `<p class="text-red-400 text-xl">Failed to load videos. Check API key or quota.</p>`;
+        }
+      }
+      async function loadPopularVideos() {
+        const container = document.getElementById('popularVideos');
+        try {
+          const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=viewCount&maxResults=6`);
+          const searchData = await searchRes.json();
+          if (!searchData.items) throw new Error('No videos found');
+          const videoIds = searchData.items.filter(item => item.id.kind === 'youtube#video').map(item => item.id.videoId).join(',');
+          if (!videoIds) {
+            container.innerHTML = '<p class="text-red-400 text-xl">No videos found.</p>';
+            return;
+          }
+          const detailsRes = await fetch(`https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=snippet,statistics`);
+          const detailsData = await detailsRes.json();
+          if (!detailsData.items) throw new Error('No video details found');
+          container.innerHTML = '';
+          detailsData.items.forEach((item, i) => {
+            const div = document.createElement('div');
+            div.className = 'video-card bg-gray-800 rounded-xl glow-effect';
+            div.style.opacity = '0';
+            div.innerHTML = `
+              <div class="aspect-w-16 aspect-h-9">
+                <iframe data-src="https://www.youtube.com/embed/${item.id}" title="${item.snippet.title}" class="rounded-t-xl lazy-iframe" loading="lazy" allowfullscreen></iframe>
+              </div>
+              <div class="p-6">
+                <h4 class="text-xl font-semibold line-clamp-2 mb-3">${item.snippet.title}</h4>
+                <p class="text-base text-gray-400"><i class="fas fa-eye mr-2"></i>${parseInt(item.statistics.viewCount).toLocaleString()} views • ${new Date(item.snippet.publishedAt).toLocaleDateString()}</p>
+              </div>
+            `;
+            container.appendChild(div);
+            setTimeout(() => { div.style.opacity = '1'; }, i * 100);
+          });
+          const observer = new IntersectionObserver(
+            debounce((entries) => {
+              entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                  const iframe = entry.target;
+                  iframe.src = iframe.dataset.src;
+                  observer.unobserve(iframe);
+                }
+              });
+            }, 100),
+            { rootMargin: '200px' }
+          );
+          document.querySelectorAll('.lazy-iframe').forEach(iframe => observer.observe(iframe));
+        } catch (error) {
+          console.error('Error in loadPopularVideos:', error.message, error.response?.status);
+          container.innerHTML = `<p class="text-red-400 text-xl">Failed to load popular videos. Check API key or quota.</p>`;
+        }
+      }
+      async function loadRecentComments() {
+        const container = document.getElementById('commentList');
+        const cacheKey = 'youtubeComments';
+        const cached = JSON.parse(localStorage.getItem(cacheKey));
+        if (cached && Date.now() - cached.timestamp < cacheExpiry) {
+          container.innerHTML = '';
+          cached.comments.forEach((comment, i) => {
+            const div = document.createElement('div');
+            div.className = 'comment-card glow-effect';
+            div.style.opacity = '0';
+            div.innerHTML = `
+              <div class="flex items-start space-x-4">
+                <img src="${comment.authorProfileImageUrl}" alt="${comment.authorDisplayName}'s profile picture" class="w-12 h-12 rounded-full border-2 border-[var(--primary-color)]">
+                <div class="text-left">
+                  <p class="font-semibold text-lg">${comment.authorDisplayName} <span class="text-sm text-gray-400">(${new Date(comment.publishedAt).toLocaleDateString()})</span></p>
+                  <p class="text-base line-clamp-2">${comment.textDisplay}</p>
                 </div>
               </div>
             `;
             container.appendChild(div);
+            setTimeout(() => { div.style.opacity = '1'; }, i * 100);
           });
+          return;
         }
-        if (!container.innerHTML) {
-          container.innerHTML = '<p class="text-gray-400"><i class="fas fa-exclamation-circle mr-2"></i>No comments found.</p>';
-        }
-        gsap.from(container.children, {
-          opacity: 0,
-          y: 10,
-          stagger: 0.1,
-          duration: 0.5,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: container,
-            start: 'top 80%'
+        try {
+          const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=4`);
+          const searchData = await searchRes.json();
+          if (!searchData.items) throw new Error('No videos found');
+          const videoIds = searchData.items.filter(item => item.id.kind === 'youtube#video').map(item => item.id.videoId);
+          if (!videoIds.length) {
+            container.innerHTML = '<p class="text-red-400 text-xl">No comments found.</p>';
+            return;
           }
-        });
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-        container.innerHTML = '<p class="text-gray-400"><i class="fas fa-exclamation-circle mr-2"></i>Failed to load comments. Please try again later.</p>';
+          container.innerHTML = '';
+          const comments = [];
+          for (const videoId of videoIds) {
+            const commentRes = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?key=${API_KEY}&videoId=${videoId}&part=snippet&maxResults=2`);
+            const commentData = await commentRes.json();
+            if (!commentData.items) continue;
+            commentData.items.forEach(item => {
+              const comment = item.snippet.topLevelComment.snippet;
+              comments.push({
+                authorDisplayName: comment.authorDisplayName,
+                authorProfileImageUrl: comment.authorProfileImageUrl || 'https://via.placeholder.com/48',
+                textDisplay: comment.textDisplay,
+                publishedAt: comment.publishedAt
+              });
+            });
+          }
+          comments.forEach((comment, i) => {
+            const div = document.createElement('div');
+            div.className = 'comment-card glow-effect';
+            div.style.opacity = '0';
+            div.innerHTML = `
+              <div class="flex items-start space-x-4">
+                <img src="${comment.authorProfileImageUrl}" alt="${comment.authorDisplayName}'s profile picture" class="w-12 h-12 rounded-full border-2 border-[var(--primary-color)]">
+                <div class="text-left">
+                  <p class="font-semibold text-lg">${comment.authorDisplayName} <span class="text-sm text-gray-400">(${new Date(comment.publishedAt).toLocaleDateString()})</span></p>
+                  <p class="text-base line-clamp-2">${comment.textDisplay}</p>
+                </div>
+              </div>
+            `;
+            container.appendChild(div);
+            setTimeout(() => { div.style.opacity = '1'; }, i * 100);
+          });
+          if (!comments.length) {
+            container.innerHTML = '<p class="text-red-400 text-xl">No comments found.</p>';
+          }
+          localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), comments }));
+        } catch (error) {
+          console.error('Error in loadRecentComments:', error.message, error.response?.status);
+          container.innerHTML = `<p class="text-red-400 text-xl">Failed to load comments. Check API key or quota.</p>`;
+        }
       }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
       getProfilePicture();
       getStats();
-      loadVideos('latestVideos', false);
-      loadVideos('latestShorts', true);
+      loadLatestVideos();
+      loadPopularVideos();
       loadRecentComments();
-    });
+    }
+    setTimeout(loadYouTubeData, 1000);
   </script>
-</body>
-</html>
