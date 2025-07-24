@@ -53,8 +53,8 @@
       transition: opacity 0.5s ease-out;
     }
     .loading-logo {
-      width: 140px;
-      height: 140px;
+      width: 150px;
+      height: 150px;
       border-radius: 50%;
       border: 4px solid var(--primary-color);
       transition: transform 0.5s ease-in-out, box-shadow 0.5s;
@@ -166,8 +166,15 @@
     }
     .large-font { font-size: 1.5rem; }
     .no-animations * { transition: none !important; animation: none !important; }
+    .navbar {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+    }
     .navbar-collapse {
       display: none;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
     .navbar-collapse.active {
       display: flex;
@@ -179,6 +186,42 @@
       background: #111827;
       padding: 20px;
       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .nav-link {
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--secondary-color);
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    @media (min-width: 768px) {
+      .navbar-collapse {
+        display: flex !important;
+        position: static;
+        background: transparent;
+        padding: 0;
+        box-shadow: none;
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .nav-link {
+        padding: 0.5rem 1rem;
+      }
+      .nav-link.active::after {
+        bottom: -4px;
+      }
     }
     .gradient-text {
       background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
@@ -215,7 +258,7 @@
       text-align: center;
       box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
     }
-    input:focus, button:focus {
+    input:focus, button:focus, textarea:focus {
       outline: 2px solid var(--primary-color);
       outline-offset: 2px;
     }
@@ -230,15 +273,6 @@
       transform: translateY(-4px);
       box-shadow: 0 8px 16px rgba(0, 212, 255, 0.4);
     }
-    @media (min-width: 768px) {
-      .navbar-collapse {
-        display: flex !important;
-        position: static;
-        background: transparent;
-        padding: 0;
-        box-shadow: none;
-      }
-    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -250,30 +284,33 @@
 </head>
 <body class="bg-gray-900 text-white">
   <div class="loading-screen" id="loadingScreen" role="alert" aria-busy="true">
-    <img id="loadingProfilePicture" class="loading-logo" alt="Emulation12 Logo" src="https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj">
+    <img id="loadingProfilePicture" class="loading-logo" alt="Emulation12 Profile Picture" src="https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj">
     <h2 class="text-4xl font-bold gradient-text mb-8">Emulation12</h2>
     <div class="loading-bar">
       <div class="loading-progress"></div>
     </div>
   </div>
   <canvas id="tsparticles" role="presentation"></canvas>
-  <nav class="bg-gray-950 py-6 sticky top-0 z-50 shadow-lg" role="navigation" aria-label="Main navigation">
+  <nav class="navbar py-6 sticky top-0 z-50" role="navigation" aria-label="Main navigation">
     <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-      <a href="#home" class="flex items-center text-3xl font-bold gradient-text">
-        <img id="navProfilePicture" class="w-12 h-12 rounded-full mr-4 border-4 border-[var(--primary-color)] glow-effect" alt="Profile picture" src="https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj">
+      <a href="index.html" class="flex items-center text-3xl font-bold gradient-text glow-effect">
+        <img id="navProfilePicture" class="w-14 h-14 rounded-full mr-4 border-4 border-[var(--primary-color)]" alt="Profile picture" src="https://yt3.googleusercontent.com/G2XHZdpMqIfD2r8n9FIvaP-YdxHXeCW4BWi_Fj9Bw04hwvUNtXozo00HkKXKtGii3r0YHje93Q=s160-c-k-c0x00ffffff-no-rj">
         Emulation12
       </a>
-      <button id="navbarToggle" class="md:hidden text-[var(--primary-color)]" aria-label="Toggle navigation"><i class="fas fa-bars text-2xl"></i></button>
-      <ul class="flex gap-10 navbar-collapse md:flex flex-col md:flex-row items-center font-semibold text-lg" id="navbarMenu">
-        <li><a href="#home" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-home mr-2"></i>Home</a></li>
-        <li><a href="#stats" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-chart-line mr-2"></i>Stats</a></li>
-        <li><a href="#videos" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-video mr-2"></i>Videos</a></li>
-        <li><a href="#popular-videos" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-star mr-2"></i>Popular Videos</a></li>
-        <li><a href="#games" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-gamepad mr-2"></i>Games</a></li>
-        <li><a href="#community" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-users mr-2"></i>Community</a></li>
-        <li><a href="#newsletter" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-envelope mr-2"></i>Newsletter</a></li>
-        <li><a href="#about" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-info-circle mr-2"></i>About</a></li>
-        <li><button id="settingsButton" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors" aria-label="Open settings"><i class="fas fa-cog mr-2"></i>Settings</button></li>
+      <button id="navbarToggle" class="md:hidden text-[var(--primary-color)] focus:outline-none" aria-label="Toggle navigation"><i class="fas fa-bars text-3xl"></i></button>
+      <ul class="navbar-collapse md:flex flex-col md:flex-row items-center gap-6 font-semibold text-lg" id="navbarMenu">
+        <li><a href="index.html" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-home mr-2"></i>Home</a></li>
+        <li><a href="index.html#stats" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-chart-line mr-2"></i>Stats</a></li>
+        <li><a href="index.html#videos" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-video mr-2"></i>Videos</a></li>
+        <li><a href="index.html#popular-videos" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-star mr-2"></i>Popular</a></li>
+        <li><a href="index.html#games" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-gamepad mr-2"></i>Games</a></li>
+        <li><a href="index.html#community" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-users mr-2"></i>Community</a></li>
+        <li><a href="index.html#newsletter" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-envelope mr-2"></i>Newsletter</a></li>
+        <li><a href="index.html#about" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-info-circle mr-2"></i>About</a></li>
+        <li><a href="contact.html" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-envelope-open-text mr-2"></i>Contact</a></li>
+        <li><a href="terms.html" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-file-alt mr-2"></i>Terms</a></li>
+        <li><a href="privacy.html" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors"><i class="fas fa-shield-alt mr-2"></i>Privacy</a></li>
+        <li><button id="settingsButton" class="nav-link text-[var(--primary-color)] hover:text-[var(--secondary-color)] transition-colors focus:outline-none" aria-label="Open settings"><i class="fas fa-cog mr-2"></i>Settings</button></li>
       </ul>
     </div>
   </nav>
@@ -281,7 +318,7 @@
     <div class="modal-content bg-gray-800 text-white">
       <div class="flex justify-between items-center mb-6">
         <h2 id="settingsTitle" class="text-3xl font-bold gradient-text"><i class="fas fa-cog mr-2"></i>Settings</h2>
-        <button id="closeModal" class="text-[var(--primary-color)] text-2xl" aria-label="Close settings"><i class="fas fa-times"></i></button>
+        <button id="closeModal" class="text-[var(--primary-color)] text-2xl focus:outline-none" aria-label="Close settings"><i class="fas fa-times"></i></button>
       </div>
       <div class="flex gap-6 mb-6 flex-wrap">
         <button class="tab-btn bg-[var(--primary-color)] text-gray-900 px-8 py-3 rounded-full glow-effect font-semibold" data-tab="appearance" aria-selected="true">Appearance</button>
@@ -414,8 +451,9 @@
   <footer class="bg-gray-950 py-12 text-center" role="contentinfo">
     <p class="text-xl mb-6"><i class="fas fa-copyright mr-2"></i>© 2025 Emulation12. All rights reserved.</p>
     <div class="flex gap-8 justify-center">
-      <a href="#privacy" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-lg" aria-label="Privacy policy">Privacy</a>
-      <a href="#terms" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-lg" aria-label="Terms of service">Terms</a>
+      <a href="privacy.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-lg" aria-label="Privacy policy">Privacy</a>
+      <a href="terms.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-lg" aria-label="Terms of service">Terms</a>
+      <a href="contact.html" class="text-[var(--primary-color)] hover:text-[var(--secondary-color)] text-lg" aria-label="Contact us">Contact</a>
     </div>
   </footer>
   <script>
@@ -440,7 +478,6 @@
           console.error('tsParticles library not loaded');
           return;
         }
-        console.log('Attempting to load tsParticles...');
         await tsParticles.load({
           id: 'tsparticles',
           options: {
@@ -487,7 +524,6 @@
             detectRetina: true
           }
         });
-        console.log('tsParticles loaded successfully');
       } catch (error) {
         console.error('tsParticles failed to load:', error.message);
       }
@@ -529,6 +565,14 @@
     document.querySelectorAll('section').forEach(section => observer.observe(section));
 
     // Navbar
+    function updateActiveNavLink() {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        link.classList.toggle('active', href === currentPage || (currentPage === 'index.html' && href.includes('#')));
+      });
+    }
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', e => {
         e.preventDefault();
@@ -539,6 +583,7 @@
     document.getElementById('navbarToggle').addEventListener('click', () => {
       document.getElementById('navbarMenu').classList.toggle('active');
     });
+    window.addEventListener('load', updateActiveNavLink);
 
     // Settings Modal
     document.getElementById('settingsButton').addEventListener('click', () => {
@@ -676,7 +721,7 @@
       async function getStats() {
         const cacheKey = 'channelStats';
         const cached = JSON.parse(localStorage.getItem(cacheKey));
-        if (cached && Date.now() - cached.timestamp < 24 * 3600 * 1000) {
+        if (cached && Date.now() - cached.timestamp < cacheExpiry) {
           document.getElementById('subCount').textContent = cached.subscriberCount;
           document.getElementById('viewCount').textContent = cached.viewCount;
           document.getElementById('videoCount').textContent = cached.videoCount;
@@ -702,7 +747,7 @@
           });
           return stats;
         } catch (error) {
-          console.error('Error in getStats:', error.message, error.response?.status);
+          console.error('Error in getStats:', error.message);
           document.getElementById('subCount').textContent = '1,100';
           document.getElementById('viewCount').textContent = '100,000';
           document.getElementById('videoCount').textContent = '50';
@@ -724,38 +769,22 @@
           const detailsData = await detailsRes.json();
           if (!detailsData.items) throw new Error('No video details found');
           container.innerHTML = '';
-          detailsData.items.forEach((item, i) => {
-            const div = document.createElement('div');
-            div.className = 'video-card bg-gray-800 rounded-xl glow-effect';
-            div.style.opacity = '0';
-            div.innerHTML = `
-              <div class="aspect-w-16 aspect-h-9">
-                <iframe data-src="https://www.youtube.com/embed/${item.id}" title="${item.snippet.title}" class="rounded-t-xl lazy-iframe" loading="lazy" allowfullscreen></iframe>
-              </div>
-              <div class="p-6">
-                <h4 class="text-xl font-semibold line-clamp-2 mb-3">${item.snippet.title}</h4>
-                <p class="text-base text-gray-400"><i class="fas fa-eye mr-2"></i>${parseInt(item.statistics.viewCount).toLocaleString()} views • ${new Date(item.snippet.publishedAt).toLocaleDateString()}</p>
-              </div>
+          detailsData.items.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'video-card rounded-xl p-6 glow-effect';
+            card.innerHTML = `
+              <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="block">
+                <img src="${video.snippet.thumbnails.high.url}" alt="${video.snippet.title}" class="w-full rounded-lg mb-4">
+                <h3 class="text-xl font-semibold">${video.snippet.title}</h3>
+                <p class="text-gray-400 mt-2">${new Date(video.snippet.publishedAt).toLocaleDateString()}</p>
+                <p class="text-gray-400"><i class="fas fa-eye mr-2"></i>${parseInt(video.statistics.viewCount).toLocaleString()} views</p>
+              </a>
             `;
-            container.appendChild(div);
-            setTimeout(() => { div.style.opacity = '1'; }, i * 100);
+            container.appendChild(card);
           });
-          const observer = new IntersectionObserver(
-            debounce((entries) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  const iframe = entry.target;
-                  iframe.src = iframe.dataset.src;
-                  observer.unobserve(iframe);
-                }
-              });
-            }, 100),
-            { rootMargin: '200px' }
-          );
-          document.querySelectorAll('.lazy-iframe').forEach(iframe => observer.observe(iframe));
         } catch (error) {
-          console.error('Error in loadLatestVideos:', error.message, error.response?.status);
-          container.innerHTML = `<p class="text-red-400 text-xl">Failed to load videos. Check API key or quota.</p>`;
+          console.error('Error in loadLatestVideos:', error.message);
+          container.innerHTML = '<p class="text-red-400 text-xl">Failed to load videos.</p>';
         }
       }
       async function loadPopularVideos() {
@@ -773,119 +802,58 @@
           const detailsData = await detailsRes.json();
           if (!detailsData.items) throw new Error('No video details found');
           container.innerHTML = '';
-          detailsData.items.forEach((item, i) => {
-            const div = document.createElement('div');
-            div.className = 'video-card bg-gray-800 rounded-xl glow-effect';
-            div.style.opacity = '0';
-            div.innerHTML = `
-              <div class="aspect-w-16 aspect-h-9">
-                <iframe data-src="https://www.youtube.com/embed/${item.id}" title="${item.snippet.title}" class="rounded-t-xl lazy-iframe" loading="lazy" allowfullscreen></iframe>
-              </div>
-              <div class="p-6">
-                <h4 class="text-xl font-semibold line-clamp-2 mb-3">${item.snippet.title}</h4>
-                <p class="text-base text-gray-400"><i class="fas fa-eye mr-2"></i>${parseInt(item.statistics.viewCount).toLocaleString()} views • ${new Date(item.snippet.publishedAt).toLocaleDateString()}</p>
-              </div>
+          detailsData.items.forEach(video => {
+            const card = document.createElement('div');
+            card.className = 'video-card rounded-xl p-6 glow-effect';
+            card.innerHTML = `
+              <a href="https://www.youtube.com/watch?v=${video.id}" target="_blank" class="block">
+                <img src="${video.snippet.thumbnails.high.url}" alt="${video.snippet.title}" class="w-full rounded-lg mb-4">
+                <h3 class="text-xl font-semibold">${video.snippet.title}</h3>
+                <p class="text-gray-400 mt-2">${new Date(video.snippet.publishedAt).toLocaleDateString()}</p>
+                <p class="text-gray-400"><i class="fas fa-eye mr-2"></i>${parseInt(video.statistics.viewCount).toLocaleString()} views</p>
+              </a>
             `;
-            container.appendChild(div);
-            setTimeout(() => { div.style.opacity = '1'; }, i * 100);
+            container.appendChild(card);
           });
-          const observer = new IntersectionObserver(
-            debounce((entries) => {
-              entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                  const iframe = entry.target;
-                  iframe.src = iframe.dataset.src;
-                  observer.unobserve(iframe);
-                }
-              });
-            }, 100),
-            { rootMargin: '200px' }
-          );
-          document.querySelectorAll('.lazy-iframe').forEach(iframe => observer.observe(iframe));
         } catch (error) {
-          console.error('Error in loadPopularVideos:', error.message, error.response?.status);
-          container.innerHTML = `<p class="text-red-400 text-xl">Failed to load popular videos. Check API key or quota.</p>`;
+          console.error('Error in loadPopularVideos:', error.message);
+          container.innerHTML = '<p class="text-red-400 text-xl">Failed to load videos.</p>';
         }
       }
-      async function loadRecentComments() {
+      async function loadComments() {
         const container = document.getElementById('commentList');
-        const cacheKey = 'youtubeComments';
-        const cached = JSON.parse(localStorage.getItem(cacheKey));
-        if (cached && Date.now() - cached.timestamp < cacheExpiry) {
-          container.innerHTML = '';
-          cached.comments.forEach((comment, i) => {
-            const div = document.createElement('div');
-            div.className = 'comment-card glow-effect';
-            div.style.opacity = '0';
-            div.innerHTML = `
-              <div class="flex items-start space-x-4">
-                <img src="${comment.authorProfileImageUrl}" alt="${comment.authorDisplayName}'s profile picture" class="w-12 h-12 rounded-full border-2 border-[var(--primary-color)]">
-                <div class="text-left">
-                  <p class="font-semibold text-lg">${comment.authorDisplayName} <span class="text-sm text-gray-400">(${new Date(comment.publishedAt).toLocaleDateString()})</span></p>
-                  <p class="text-base line-clamp-2">${comment.textDisplay}</p>
-                </div>
-              </div>
-            `;
-            container.appendChild(div);
-            setTimeout(() => { div.style.opacity = '1'; }, i * 100);
-          });
-          return;
-        }
         try {
-          const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=4`);
+          const searchRes = await fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&part=snippet,id&order=date&maxResults=10`);
           const searchData = await searchRes.json();
-          if (!searchData.items) throw new Error('No videos found');
-          const videoIds = searchData.items.filter(item => item.id.kind === 'youtube#video').map(item => item.id.videoId);
-          if (!videoIds.length) {
-            container.innerHTML = '<p class="text-red-400 text-xl">No comments found.</p>';
+          if (!searchData.items) throw new Error('No videos found for comments');
+          const videoId = searchData.items.find(item => item.id.kind === 'youtube#video')?.id.videoId;
+          if (!videoId) {
+            container.innerHTML = '<p class="text-red-400 text-xl">No videos found for comments.</p>';
             return;
           }
+          const commentsRes = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?key=${API_KEY}&videoId=${videoId}&part=snippet&maxResults=5`);
+          const commentsData = await commentsRes.json();
+          if (!commentsData.items) throw new Error('No comments found');
           container.innerHTML = '';
-          const comments = [];
-          for (const videoId of videoIds) {
-            const commentRes = await fetch(`https://www.googleapis.com/youtube/v3/commentThreads?key=${API_KEY}&videoId=${videoId}&part=snippet&maxResults=2`);
-            const commentData = await commentRes.json();
-            if (!commentData.items) continue;
-            commentData.items.forEach(item => {
-              const comment = item.snippet.topLevelComment.snippet;
-              comments.push({
-                authorDisplayName: comment.authorDisplayName,
-                authorProfileImageUrl: comment.authorProfileImageUrl || 'https://via.placeholder.com/48',
-                textDisplay: comment.textDisplay,
-                publishedAt: comment.publishedAt
-              });
-            });
-          }
-          comments.forEach((comment, i) => {
-            const div = document.createElement('div');
-            div.className = 'comment-card glow-effect';
-            div.style.opacity = '0';
-            div.innerHTML = `
-              <div class="flex items-start space-x-4">
-                <img src="${comment.authorProfileImageUrl}" alt="${comment.authorDisplayName}'s profile picture" class="w-12 h-12 rounded-full border-2 border-[var(--primary-color)]">
-                <div class="text-left">
-                  <p class="font-semibold text-lg">${comment.authorDisplayName} <span class="text-sm text-gray-400">(${new Date(comment.publishedAt).toLocaleDateString()})</span></p>
-                  <p class="text-base line-clamp-2">${comment.textDisplay}</p>
-                </div>
-              </div>
+          commentsData.items.forEach(comment => {
+            const commentText = comment.snippet.topLevelComment.snippet.textDisplay;
+            const author = comment.snippet.topLevelComment.snippet.authorDisplayName;
+            const card = document.createElement('div');
+            card.className = 'comment-card';
+            card.innerHTML = `
+              <p class="text-lg"><strong>${author}</strong>: ${commentText}</p>
+              <p class="text-gray-400 mt-2"><i class="fas fa-comment mr-2"></i>Posted on ${new Date(comment.snippet.topLevelComment.snippet.publishedAt).toLocaleDateString()}</p>
             `;
-            container.appendChild(div);
-            setTimeout(() => { div.style.opacity = '1'; }, i * 100);
+            container.appendChild(card);
           });
-          if (!comments.length) {
-            container.innerHTML = '<p class="text-red-400 text-xl">No comments found.</p>';
-          }
-          localStorage.setItem(cacheKey, JSON.stringify({ timestamp: Date.now(), comments }));
         } catch (error) {
-          console.error('Error in loadRecentComments:', error.message, error.response?.status);
-          container.innerHTML = `<p class="text-red-400 text-xl">Failed to load comments. Check API key or quota.</p>`;
+          console.error('Error in loadComments:', error.message);
+          container.innerHTML = '<p class="text-red-400 text-xl">Failed to load comments.</p>';
         }
       }
-      getProfilePicture();
-      getStats();
-      loadLatestVideos();
-      loadPopularVideos();
-      loadRecentComments();
+      Promise.all([getProfilePicture(), getStats(), loadLatestVideos(), loadPopularVideos(), loadComments()]).catch(err => console.error('Error loading YouTube data:', err));
     }
-    setTimeout(loadYouTubeData, 1000);
+    window.addEventListener('load', loadYouTubeData);
   </script>
+</body>
+</html>
